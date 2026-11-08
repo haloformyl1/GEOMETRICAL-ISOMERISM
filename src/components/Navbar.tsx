@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Accessibility, Maximize2, Menu, Minimize2, X, Phone } from 'lucide-react';
+import { Accessibility, Check, Maximize2, Menu, Minimize2, X, Phone } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { BrandMark } from './BrandMark';
 import { LanguageSelector } from './LanguageSelector';
@@ -20,13 +20,16 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [appFullscreen, setAppFullscreen] = useState(false);
+  const [accessibilityOpen, setAccessibilityOpen] = useState(false);
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setAccessibilityOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    const onFullscreenChange = () => setAppFullscreen(document.fullscreenElement === document.documentElement);
+    const onFullscreenChange = () =>
+      setAppFullscreen(document.fullscreenElement === document.documentElement);
     document.addEventListener('fullscreenchange', onFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, []);
@@ -44,17 +47,18 @@ export const Navbar: React.FC = () => {
     <>
       <header className="sticky top-0 z-50 flex h-auto min-h-[var(--header-height-mobile)] items-center border-b border-[rgba(70,227,255,0.18)] bg-[rgba(8,19,30,0.92)] py-1.5 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] md:min-h-[var(--header-height-desktop)]">
         <div className="mx-auto flex w-full max-w-[var(--page-max)] items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5 lg:px-8">
+          {/* Logo & Designer Pill (Exact layout as Solid-State Chemistry) */}
           <div className="flex shrink-0 flex-col items-start gap-1">
             <button
               type="button"
               onClick={() => navigate('/')}
               className="rounded-xl focus-visible:outline-none text-left bg-transparent border-0 p-0 cursor-pointer"
-              aria-label="PIECHEM home"
+              aria-label="PIECHEM Stereochemistry home"
             >
               <BrandMark compact />
             </button>
 
-            {/* Designed by Arghyadeep Roy badge with call action */}
+            {/* Designed by Arghyadeep Roy badge */}
             <div className="hidden sm:flex px-2.5 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)] text-[11px] text-slate-300 font-semibold tracking-wide items-center space-x-1.5 mt-0.5">
               <span className="text-slate-400">Designed by</span>
               <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-400">
@@ -73,6 +77,7 @@ export const Navbar: React.FC = () => {
             </div>
           </div>
 
+          {/* Navigation links */}
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
             {navLinks.map((link) => {
               const active = location.pathname.startsWith(link.path);
@@ -90,29 +95,69 @@ export const Navbar: React.FC = () => {
                 >
                   {link.label}
                   {active && (
-                    <span className="absolute inset-x-3 -bottom-[9px] h-0.5 rounded-full bg-[var(--accent-primary)]" aria-hidden="true" />
+                    <span
+                      className="absolute inset-x-3 -bottom-[9px] h-0.5 rounded-full bg-[var(--accent-primary)]"
+                      aria-hidden="true"
+                    />
                   )}
                 </button>
               );
             })}
           </nav>
 
+          {/* Right Action Tools: Language, Accessibility, Fullscreen, Menu */}
           <div className="relative flex items-center gap-1.5 sm:gap-2">
             <LanguageSelector compact />
 
-            <button
-              type="button"
-              onClick={() => setReducedMotion(!reducedMotion)}
-              className={`grid h-9 w-9 place-items-center rounded-xl border transition-all cursor-pointer ${
-                reducedMotion
-                  ? 'border-amber-400 bg-amber-500/20 text-amber-300'
-                  : 'border-[rgba(70,227,255,0.22)] bg-slate-900/60 text-slate-300 hover:text-white'
-              }`}
-              title={reducedMotion ? 'Enable motion' : 'Reduce motion'}
-            >
-              <Accessibility className="h-4 w-4" />
-            </button>
+            {/* Accessibility dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setAccessibilityOpen((open) => !open)}
+                className={`grid h-9 w-9 place-items-center rounded-xl border transition-all cursor-pointer ${
+                  accessibilityOpen || reducedMotion
+                    ? 'border-cyan-400 bg-cyan-500/20 text-cyan-300'
+                    : 'border-[rgba(70,227,255,0.22)] bg-slate-900/60 text-slate-300 hover:text-white'
+                }`}
+                aria-label="Accessibility options"
+                aria-expanded={accessibilityOpen}
+                title="Accessibility"
+              >
+                <Accessibility className="h-4 w-4" />
+              </button>
 
+              {accessibilityOpen && (
+                <div className="absolute right-0 top-[calc(100%+10px)] z-[100] w-64 rounded-xl border border-[rgba(70,227,255,0.2)] bg-[#07192b]/95 p-3 backdrop-blur-xl shadow-[0_16px_36px_rgba(0,0,0,0.5)] animate-fade-in-up">
+                  <p className="px-2 pb-2 text-[11px] font-extrabold uppercase tracking-[0.1em] text-cyan-300/80">
+                    Accessibility
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setReducedMotion(!reducedMotion)}
+                    className="flex min-h-12 w-full items-center justify-between rounded-lg px-3 text-left font-bold text-[#edf8ff] hover:bg-white/5 cursor-pointer border-0"
+                    aria-pressed={reducedMotion}
+                  >
+                    <span>
+                      <span className="block text-sm">Reduce Motion</span>
+                      <span className="block text-xs font-medium text-slate-400">
+                        Pause decorative 3D spin
+                      </span>
+                    </span>
+                    <span
+                      className={`grid h-6 w-6 place-items-center rounded-md border ${
+                        reducedMotion
+                          ? 'border-cyan-400 bg-cyan-500 text-white'
+                          : 'border-slate-700'
+                      }`}
+                    >
+                      {reducedMotion && <Check className="h-4 w-4" />}
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Fullscreen toggle */}
             <button
               type="button"
               onClick={toggleAppFullscreen}
@@ -122,6 +167,7 @@ export const Navbar: React.FC = () => {
               {appFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </button>
 
+            {/* Mobile menu hamburger */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -149,7 +195,9 @@ export const Navbar: React.FC = () => {
                     setMobileMenuOpen(false);
                   }}
                   className={`flex items-center justify-between rounded-xl p-4 text-left font-bold text-lg cursor-pointer border-0 ${
-                    active ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-300 hover:bg-white/5'
+                    active
+                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                      : 'text-slate-300 hover:bg-white/5'
                   }`}
                 >
                   <span>{link.label}</span>
@@ -158,14 +206,25 @@ export const Navbar: React.FC = () => {
             })}
           </div>
 
-          <div className="mt-auto border-t border-slate-800 pt-6">
-            <p className="text-xs text-slate-400 text-center">
-              Designed by <span className="text-cyan-300 font-bold">Arghyadeep Roy</span> (9830507435)
-            </p>
+          <div className="mt-6 border-t border-slate-800/80 pt-6 flex flex-col gap-4">
+            <LanguageSelector />
+
+            <div className="flex items-center justify-between text-xs text-slate-400 pt-2">
+              <span>Designed &amp; Prepared By:</span>
+              <span className="font-bold text-cyan-300">Arghyadeep Roy</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Contact:</span>
+              <a
+                href="tel:9830507435"
+                className="font-mono font-bold text-cyan-400 hover:text-white"
+              >
+                9830507435
+              </a>
+            </div>
           </div>
         </div>
       )}
     </>
   );
 };
-

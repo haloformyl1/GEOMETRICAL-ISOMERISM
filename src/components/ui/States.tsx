@@ -11,7 +11,7 @@ export const LoadingState: React.FC<{ compact?: boolean }> = ({ compact = false 
         <span className="absolute -inset-3 -z-10 animate-ping rounded-2xl border border-[var(--accent-primary)] opacity-20" aria-hidden="true" />
       </div>
       <div>
-        <div className="font-bold text-[var(--text-primary)]"><BilingualText en="Preparing the crystal workspace" bn="ক্রিস্টাল ওয়ার্কস্পেস প্রস্তুত হচ্ছে" /></div>
+        <div className="font-bold text-[var(--text-primary)]"><BilingualText en="Preparing the stereochemistry workspace" bn="স্টেরিওরসায়ন ওয়ার্কস্পেস প্রস্তুত হচ্ছে" /></div>
         <div className="mt-1 text-sm text-[var(--text-muted)]"><BilingualText en="PIECHEM is loading the learning studio." bn="PIECHEM লার্নিং স্টুডিও লোড করছে।" /></div>
       </div>
     </div>

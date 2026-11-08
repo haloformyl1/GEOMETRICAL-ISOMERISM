@@ -1,32 +1,168 @@
 import React from 'react';
-import { Orbit } from 'lucide-react';
+import { useStore } from '../store/useStore';
 
 interface BrandMarkProps {
   compact?: boolean;
+  inverse?: boolean;
+  className?: string;
+  showSubtitle?: boolean;
+  subtitle?: React.ReactNode;
+  showText?: boolean;
 }
 
-export const BrandMark: React.FC<BrandMarkProps> = ({ compact = false }) => {
+export const BrandIcon: React.FC<{ size?: number; className?: string }> = ({ size = 36, className = '' }) => (
+  <div className={`relative group shrink-0 flex items-center justify-center ${className}`}>
+    {/* Ambient Glow */}
+    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 rounded-full blur-md opacity-40 group-hover:opacity-75 transition duration-500 pointer-events-none" />
+
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="relative drop-shadow-[0_4px_12px_rgba(0,198,255,0.35)] transition-transform duration-300 transform group-hover:scale-105"
+    >
+      <defs>
+        {/* Main Outer Hex Gradient */}
+        <linearGradient id="piechemHexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#00f2fe" />
+          <stop offset="50%" stopColor="#0066ff" />
+          <stop offset="100%" stopColor="#7b2cbf" />
+        </linearGradient>
+
+        {/* Core Slice Gradient */}
+        <linearGradient id="piechemCoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#3a7bd5" />
+          <stop offset="100%" stopColor="#00d2ff" />
+        </linearGradient>
+
+        {/* Glowing Accent */}
+        <radialGradient id="piechemGlowAccent" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#00f2fe" stopOpacity="0" />
+        </radialGradient>
+
+        <filter id="piechemHexShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00c6ff" floodOpacity="0.5" />
+        </filter>
+      </defs>
+
+      {/* Outer Hexagonal Molecular Structure Frame */}
+      <polygon
+        points="50,6 88,28 88,72 50,94 12,72 12,28"
+        fill="none"
+        stroke="url(#piechemHexGrad)"
+        strokeWidth="4.5"
+        strokeLinejoin="round"
+        filter="url(#piechemHexShadow)"
+      />
+
+      {/* Inner Geometric Shield */}
+      <polygon
+        points="50,15 80,32 80,68 50,85 20,68 20,32"
+        fill="#061325"
+        fillOpacity="0.9"
+        stroke="url(#piechemHexGrad)"
+        strokeWidth="1.5"
+        strokeOpacity="0.6"
+      />
+
+      {/* Molecular Node Circles (Corners) */}
+      <circle cx="50" cy="6" r="3.5" fill="#00f2fe" />
+      <circle cx="88" cy="28" r="3.5" fill="#0066ff" />
+      <circle cx="88" cy="72" r="3.5" fill="#7b2cbf" />
+      <circle cx="50" cy="94" r="3.5" fill="#00f2fe" />
+      <circle cx="12" cy="72" r="3.5" fill="#0066ff" />
+      <circle cx="12" cy="28" r="3.5" fill="#7b2cbf" />
+
+      {/* Stylized Pie & Chemistry Orbit Symbol */}
+      {/* Pie Slice 1 - Main Body */}
+      <path
+        d="M50 50 L50 24 A26 26 0 1 1 24 50 Z"
+        fill="url(#piechemCoreGrad)"
+        opacity="0.95"
+      />
+
+      {/* Pie Slice 2 - Floating Accent Wedge */}
+      <path
+        d="M54 46 L76 46 A26 26 0 0 0 54 24 Z"
+        fill="#00f2fe"
+      />
+
+      {/* Center Orbital Core */}
+      <circle cx="50" cy="50" r="5" fill="#ffffff" />
+      <circle cx="50" cy="50" r="11" fill="url(#piechemGlowAccent)" />
+
+      {/* Electron Orbital Rings */}
+      <ellipse
+        cx="50"
+        cy="50"
+        rx="31"
+        ry="13"
+        fill="none"
+        stroke="#00f2fe"
+        strokeWidth="1.8"
+        strokeDasharray="4 3"
+        transform="rotate(-30 50 50)"
+        opacity="0.85"
+      />
+    </svg>
+  </div>
+);
+
+export const BrandMark: React.FC<BrandMarkProps> = ({
+  compact = false,
+  inverse = false,
+  className = '',
+  showSubtitle = true,
+  subtitle,
+  showText = true,
+}) => {
+  const iconSize = compact ? 34 : 44;
+  const { language } = useStore();
+
+  const defaultSubtitle =
+    language === 'bn'
+      ? 'স্টেরিওরসায়ন • ইন্টারঅ্যাক্টিভ কেমিস্ট্রি'
+      : 'STEREOCHEMISTRY • INTERACTIVE CHEMISTRY';
+
+  const displaySubtitle = subtitle ?? defaultSubtitle;
+
   return (
-    <div className="flex items-center gap-2.5">
-      <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 via-sky-500 to-indigo-600 shadow-[0_0_20px_rgba(34,211,238,0.45)]">
-        <Orbit className="h-5 w-5 text-white animate-spin-slow" />
-      </div>
-      <div>
-        <div className="flex items-center gap-1.5 leading-none">
-          <span className="text-lg font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-white">
-            PIECHEM
+    <span
+      className={`inline-flex min-w-0 items-center gap-2.5 sm:gap-3 select-none ${className}`}
+      aria-label="PIECHEM"
+    >
+      <BrandIcon size={iconSize} />
+
+      {showText && (
+        <span className="flex flex-col justify-center leading-none text-left">
+          <span
+            className={`font-black tracking-wider font-sans uppercase flex items-center ${
+              compact ? 'text-xl sm:text-2xl' : 'text-3xl sm:text-4xl'
+            }`}
+          >
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300 drop-shadow-[0_2px_10px_rgba(0,242,254,0.35)]">
+              PIE
+            </span>
+            <span className={`tracking-tight ml-0.5 ${inverse ? 'text-white' : 'text-white'}`}>
+              CHEM
+            </span>
           </span>
-          <span className="rounded-md border border-cyan-500/40 bg-cyan-950/60 px-1.5 py-0.5 text-[10px] font-bold text-cyan-300">
-            STEREO
-          </span>
-        </div>
-        {!compact && (
-          <p className="mt-0.5 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-            Geometrical Isomerism Studio
-          </p>
-        )}
-      </div>
-    </div>
+          {showSubtitle && (
+            <span
+              className={`tracking-[0.14em] text-cyan-300/80 font-bold uppercase ${
+                compact
+                  ? 'text-[7px] sm:text-[9px] mt-0.5 sm:tracking-[0.18em]'
+                  : 'text-[9px] sm:text-[12px] mt-1 sm:tracking-[0.22em]'
+              } sm:whitespace-nowrap whitespace-normal`}
+            >
+              {displaySubtitle}
+            </span>
+          )}
+        </span>
+      )}
+    </span>
   );
 };
-
