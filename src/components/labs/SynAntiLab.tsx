@@ -40,7 +40,7 @@ export const SynAntiLab: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#071322] rounded-2xl overflow-hidden border border-[rgba(70,227,255,0.18)] shadow-2xl">
+    <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top Controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-4 backdrop-blur-md">
         <div className="flex items-center gap-2">
@@ -178,8 +178,8 @@ export const SynAntiLab: React.FC = () => {
       </div>
 
       {/* 3D Canvas */}
-      <div className="relative flex-1 min-h-[380px]">
-        <MolecularCanvas cameraPosition={[0, 1.2, 5.2]}>
+      <div className="relative flex-1 min-h-[460px] md:min-h-[520px] lg:min-h-[580px]">
+        <MolecularCanvas cameraPosition={[0, 0.35, 3.8]} cameraTarget={[0, 0, 0]}>
           <Molecule3DViewer
             structure={activeStructure}
             showLabels={true}

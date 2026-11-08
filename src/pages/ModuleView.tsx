@@ -68,9 +68,10 @@ export const ModuleView: React.FC = () => {
         </div>
       </div>
 
-      <div className="page-shell animate-fade-in-up pt-6 sm:pt-8 max-w-5xl mx-auto px-4">
+      {/* Main Page Container - Spans full width up to --page-max */}
+      <div className="page-shell animate-fade-in-up pt-6 sm:pt-8">
         {/* Learning Objectives Panel */}
-        <div className="mb-10 sm:mb-14">
+        <div className="reading-column mb-10 sm:mb-14">
           <div className="rounded-3xl border border-cyan-500/30 bg-[#07192be8] p-6 sm:p-8 backdrop-blur-md shadow-xl">
             <h2 className="mb-5 flex items-center gap-2.5 text-lg font-black text-cyan-300">
               <Target className="w-5 h-5 text-cyan-400" />
@@ -98,31 +99,41 @@ export const ModuleView: React.FC = () => {
         <div className="space-y-12 sm:space-y-16">
           {moduleData.sections.map((section) => (
             <section key={section.id} className="relative w-full border-b border-slate-800/80 pb-12 last:border-0 last:pb-0">
-              {section.title && (
-                <h3 className="text-xl sm:text-2xl font-black text-white mb-4">
-                  <BilingualText en={section.title.en} bn={section.title.bn} />
-                </h3>
-              )}
+              {/* Text, Heading, and Misconceptions contained in reading-column for optimal reading line-length */}
+              {section.type !== 'interactive_3d' && (
+                <div className="reading-column">
+                  {section.title && (
+                    <h3 className="text-xl sm:text-2xl font-black text-white mb-4">
+                      <BilingualText en={section.title.en} bn={section.title.bn} />
+                    </h3>
+                  )}
 
-              {section.content && (
-                <div className="text-sm sm:text-base leading-relaxed text-slate-300 mb-6 whitespace-pre-line">
-                  <BilingualText en={section.content.en} bn={section.content.bn} />
+                  {section.content && (
+                    <div className="text-sm sm:text-base leading-relaxed text-slate-300 mb-6 whitespace-pre-line">
+                      <BilingualText en={section.content.en} bn={section.content.bn} />
+                    </div>
+                  )}
+
+                  {/* Misconception Card */}
+                  {section.type === 'misconception' && (
+                    <div className="my-6">
+                      <MisconceptionCard
+                        incorrect={section.modelConfig?.incorrect || { en: '', bn: '' }}
+                        correct={section.modelConfig?.correct || { en: '', bn: '' }}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
-              {/* Misconception Card */}
-              {section.type === 'misconception' && (
-                <div className="my-6">
-                  <MisconceptionCard
-                    incorrect={section.modelConfig?.incorrect || { en: '', bn: '' }}
-                    correct={section.modelConfig?.correct || { en: '', bn: '' }}
-                  />
-                </div>
-              )}
-
-              {/* 3D Laboratories Embed */}
+              {/* 3D Laboratories Embed - Spans the full width of the container */}
               {section.type === 'interactive_3d' && (
-                <div className="my-8 w-full">
+                <div className="laboratory-container my-8 w-full">
+                  {section.content && (
+                    <div className="reading-column mb-4 text-sm sm:text-base text-slate-300 leading-relaxed">
+                      <BilingualText en={section.content.en} bn={section.content.bn} />
+                    </div>
+                  )}
                   <FullscreenInteractiveFrame title={section.title ? <BilingualText en={section.title.en} bn={section.title.bn} /> : undefined}>
                     {section.modelConfig?.type === 'bond-rotation-lab' && <BondRotationSimulator />}
                     {section.modelConfig?.type === 'cis-trans-lab' && <CisTransLab />}
@@ -135,7 +146,7 @@ export const ModuleView: React.FC = () => {
 
               {/* Next Module Link */}
               {section.type === 'next_module_link' && section.modelConfig?.targetModuleId && (
-                <div className="mt-8">
+                <div className="reading-column mt-8">
                   <NextModuleLink
                     targetModuleId={section.modelConfig.targetModuleId}
                     text={section.content as { en: string; bn: string }}
@@ -147,7 +158,7 @@ export const ModuleView: React.FC = () => {
         </div>
 
         {/* Bottom Module Complete Action */}
-        <div className="mt-16 flex justify-start border-t border-slate-800 pt-10 pb-12">
+        <div className="reading-column mt-16 flex justify-start border-t border-slate-800 pt-10 pb-12">
           <button
             type="button"
             onClick={handleComplete}
@@ -158,10 +169,10 @@ export const ModuleView: React.FC = () => {
                 : 'btn-primary'
             }`}
           >
-            <CheckCircle className="w-5 h-5" />
+            <CheckCircle className="h-5 w-5" />
             <BilingualText
-              en={isCompleted ? "Module Completed" : "Mark Module as Complete"}
-              bn={isCompleted ? "অধ্যায় সমাপ্ত" : "অধ্যায়টি সমাপ্ত হিসেবে চিহ্নিত করুন"}
+              en={isCompleted ? 'Module Completed! Revisit anytime' : 'Mark Module as Complete & Save Progress'}
+              bn={isCompleted ? 'অধ্যায় সম্পূর্ণ হয়েছে! যেকোনো সময় পুনরাবৃত্তি করুন' : 'অধ্যায় সম্পন্ন চিহ্নিত করুন এবং অগ্রগতি সংরক্ষণ করুন'}
             />
           </button>
         </div>
@@ -169,4 +180,3 @@ export const ModuleView: React.FC = () => {
     </div>
   );
 };
-

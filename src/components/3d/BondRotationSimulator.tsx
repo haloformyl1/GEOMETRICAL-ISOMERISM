@@ -132,7 +132,7 @@ export const BondRotationSimulator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full min-h-[560px] bg-[#071322] rounded-2xl overflow-hidden border border-[rgba(70,227,255,0.18)] shadow-2xl">
+    <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top HUD Controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 px-5 py-3 backdrop-blur-md">
         {/* Molecule Switcher */}
@@ -266,8 +266,8 @@ export const BondRotationSimulator: React.FC = () => {
       )}
 
       {/* 3D Canvas Viewport */}
-      <div className="relative flex-1 min-h-[380px]">
-        <MolecularCanvas cameraPosition={[0, 2.2, 5.8]}>
+      <div className="relative flex-1 min-h-[460px] md:min-h-[520px] lg:min-h-[580px]">
+        <MolecularCanvas cameraPosition={[0, 0.6, 4.0]} cameraTarget={[0, 0, 0]}>
           {/* C1 (Static at [-1, 0, 0]) */}
           <group position={[-1, 0, 0]}>
             <Sphere args={[0.45, 32, 32]}>

@@ -323,7 +323,7 @@
   .lab-frame {
     position: relative;
     display: flex;
-    min-height: clamp(420px, 62vh, 760px);
+    min-height: clamp(520px, 72vh, 860px);
     flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--border-strong);

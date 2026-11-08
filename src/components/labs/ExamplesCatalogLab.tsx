@@ -160,8 +160,8 @@ export const ExamplesCatalogLab: React.FC = () => {
         </div>
 
         {/* 3D Canvas */}
-        <div className="relative flex-1 min-h-[380px]">
-          <MolecularCanvas cameraPosition={[0, 1.5, 5.5]}>
+        <div className="relative flex-1 min-h-[460px] md:min-h-[520px]">
+          <MolecularCanvas cameraPosition={[0, 0.4, 3.8]} cameraTarget={[0, 0, 0]}>
             <Molecule3DViewer
               structure={activeStructure}
               showLabels={true}
