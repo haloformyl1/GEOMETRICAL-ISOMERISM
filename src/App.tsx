@@ -11,7 +11,6 @@ const ModuleView = lazy(() => import('./pages/ModuleView').then((m) => ({ defaul
 const Lab = lazy(() => import('./pages/Lab').then((m) => ({ default: m.Lab })));
 const Examples = lazy(() => import('./pages/Examples').then((m) => ({ default: m.Examples })));
 const Practice = lazy(() => import('./pages/Practice').then((m) => ({ default: m.Practice })));
-const Revision = lazy(() => import('./pages/Revision').then((m) => ({ default: m.Revision })));
 const Progress = lazy(() => import('./pages/Progress').then((m) => ({ default: m.Progress })));
 
 function App() {
@@ -40,7 +39,6 @@ function App() {
               <Route path="lab" element={<Lab />} />
               <Route path="examples" element={<Examples />} />
               <Route path="practice" element={<Practice />} />
-              <Route path="revision" element={<Revision />} />
               <Route path="progress" element={<Progress />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />

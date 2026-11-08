@@ -10,7 +10,6 @@ const navLinks = [
   { path: '/lab', label: '3D Labs' },
   { path: '/examples', label: '78+ Examples' },
   { path: '/practice', label: 'Practice' },
-  { path: '/revision', label: 'Revision' },
   { path: '/progress', label: 'Progress' },
 ];
 
