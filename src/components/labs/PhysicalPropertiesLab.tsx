@@ -140,19 +140,19 @@ export const PhysicalPropertiesLab: React.FC = () => {
                 Vector Summation of Bond Dipoles
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                In cis-1,2-dichloroethene, both $C-Cl$ bond dipoles point along $+Y$. The resultant dipole is:
+                In cis-1,2-dichloroethene, both C&minus;Cl bond dipoles point along +Y. The resultant dipole is:
               </p>
               <div className="my-4 rounded-xl border border-cyan-500/30 bg-slate-900/80 p-4 font-mono text-lg text-amber-300">
-                $$\vec{\mu}_{\text{net}} = \vec{\mu}_1 + \vec{\mu}_2 = 1.90\text{ D}$$
+                &mu;<sub>net</sub> = &mu;<sub>1</sub> + &mu;<sub>2</sub> = 1.90 D
               </div>
               <p className="text-sm text-slate-300">
-                In trans-1,2-dichloroethene, the two vectors point in exactly opposite directions ($\theta = 180^\circ$):
+                In trans-1,2-dichloroethene, the two vectors point in exactly opposite directions (&theta; = 180&deg;):
               </p>
               <div className="my-4 rounded-xl border border-cyan-500/30 bg-slate-900/80 p-4 font-mono text-lg text-emerald-300">
-                $$\vec{\mu}_{\text{net}} = \vec{\mu}_1 - \vec{\mu}_1 = 0.00\text{ D}$$
+                &mu;<sub>net</sub> = &mu;<sub>1</sub> &minus; &mu;<sub>1</sub> = 0.00 D
               </div>
               <p className="text-xs text-slate-400">
-                This polarity difference explains why cis has a higher boiling point ($60.3^\circ\text{C}$ vs $47.5^\circ\text{C}$).
+                This polarity difference explains why cis has a higher boiling point (60.3&deg;C vs 47.5&deg;C).
               </p>
             </div>
           </div>
@@ -180,7 +180,7 @@ export const PhysicalPropertiesLab: React.FC = () => {
                 </div>
               </div>
               <p className="text-xs text-slate-400">
-                Example: Fumaric acid melts at $287^\circ\text{C}$, whereas Maleic acid melts at $130^\circ\text{C}$ ($157^\circ\text{C}$ higher!).
+                Example: Fumaric acid melts at 287&deg;C, whereas Maleic acid melts at 130&deg;C (157&deg;C higher!).
               </p>
             </div>
           </div>
@@ -233,3 +233,4 @@ export const PhysicalPropertiesLab: React.FC = () => {
     </div>
   );
 };
+

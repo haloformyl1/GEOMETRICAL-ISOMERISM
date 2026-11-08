@@ -29,3 +29,4 @@ export const BrandMark: React.FC<BrandMarkProps> = ({ compact = false }) => {
     </div>
   );
 };
+

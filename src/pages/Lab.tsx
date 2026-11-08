@@ -84,3 +84,4 @@ export const Lab: React.FC = () => {
     </div>
   );
 };
+

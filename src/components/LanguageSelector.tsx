@@ -38,3 +38,4 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
     </div>
   );
 };
+

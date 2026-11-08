@@ -169,3 +169,4 @@ export const ModuleView: React.FC = () => {
     </div>
   );
 };
+

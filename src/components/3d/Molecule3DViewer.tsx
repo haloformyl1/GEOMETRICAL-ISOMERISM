@@ -177,3 +177,4 @@ export const Molecule3DViewer: React.FC<Molecule3DViewerProps> = ({
     </group>
   );
 };
+

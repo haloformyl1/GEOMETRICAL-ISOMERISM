@@ -148,3 +148,4 @@ export const SynAntiLab: React.FC = () => {
     </div>
   );
 };
+

@@ -82,3 +82,4 @@ export const SynAntiModule: ModuleContent = {
     }
   ]
 };
+

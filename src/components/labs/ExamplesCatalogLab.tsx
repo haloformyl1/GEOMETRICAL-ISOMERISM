@@ -207,3 +207,4 @@ export const ExamplesCatalogLab: React.FC = () => {
     </div>
   );
 };
+

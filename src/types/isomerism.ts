@@ -46,7 +46,7 @@ export interface IsomerPair {
   id: string;
   category: IsomerismCategory;
   iupacName: BilingualString;
-  commonName?: BilingualString;
+  commonName?: BilingualString | null;
   formula: string;
   systemType: 'alkene' | 'cycloalkane' | 'oxime' | 'azo' | 'complex' | 'polyene';
   isomerA: {
@@ -72,6 +72,6 @@ export interface IsomerPair {
     };
     explanation: BilingualString;
   };
-  pedagogicalNote?: BilingualString;
+  pedagogicalNote: BilingualString;
 }
 

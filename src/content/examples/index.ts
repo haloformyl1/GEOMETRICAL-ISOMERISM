@@ -20,3 +20,4 @@ export const getExamplesByCategory = (category: IsomerismCategory): IsomerPair[]
 export const getExampleById = (id: string): IsomerPair | undefined => {
   return ALL_EXAMPLES.find((ex) => ex.id === id);
 };
+

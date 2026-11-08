@@ -44,3 +44,4 @@ npx cap open android
 
 ---
 *Designed & Developed by **Arghyadeep Roy** (Contact: 9830507435)*
+

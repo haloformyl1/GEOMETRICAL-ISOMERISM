@@ -48,8 +48,15 @@ export const compareCIPAtoms = (
   if (zA !== zB) return zA - zB;
 
   // Isotope rule (D vs H)
-  const mA = atomA.massNumber || (atomA.element === 'D' ? 2 : atomA.element === 'T' ? 3 : zA * 2);
-  const mB = atomB.massNumber || (atomB.element === 'D' ? 2 : atomB.element === 'T' ? 3 : zB * 2);
+  const getMass = (atom: { element: string; massNumber?: number }) => {
+    if (atom.massNumber) return atom.massNumber;
+    if (atom.element === 'H') return 1;
+    if (atom.element === 'D') return 2;
+    if (atom.element === 'T') return 3;
+    return getAtomicNumber(atom.element) * 2;
+  };
+  const mA = getMass(atomA);
+  const mB = getMass(atomB);
   return mA - mB;
 };
 
