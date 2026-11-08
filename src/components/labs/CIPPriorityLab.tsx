@@ -67,8 +67,8 @@ export const CIPPriorityLab: React.FC = () => {
       </div>
 
       {/* Main 3D Canvas Area */}
-      <div className="relative flex-1 min-h-[460px] md:min-h-[520px] lg:min-h-[580px]">
-        <MolecularCanvas cameraPosition={[0, 0.4, 3.8]} cameraTarget={[0, 0, 0]}>
+      <div className="relative flex-1 w-full h-full min-h-[480px] md:min-h-[540px] lg:min-h-[600px] overflow-hidden">
+        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
           <Molecule3DViewer
             structure={activeStructure}
             showLabels={true}

@@ -13,7 +13,7 @@ interface MolecularCanvasProps {
 
 export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
   children,
-  cameraPosition = [0, 1.5, 5.5],
+  cameraPosition = [0, 0.4, 4.4],
   cameraTarget = [0, 0, 0],
   resetKey = 0,
   ariaLabel = 'Interactive 3D molecular stereochemistry model',
@@ -39,7 +39,7 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
 
   return (
     <div
-      className="relative h-full min-h-[380px] w-full overflow-hidden bg-[var(--canvas-background)]"
+      className="absolute inset-0 h-full w-full overflow-hidden bg-[var(--canvas-background)]"
       role="img"
       aria-label={ariaLabel}
     >
@@ -66,7 +66,7 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
           enableZoom
           target={cameraTarget}
           maxDistance={14}
-          minDistance={2.5}
+          minDistance={1.8}
           makeDefault
         />
 
@@ -84,7 +84,7 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
               sectionColor="#2d718f"
               cellColor="#173d4f"
               sectionSize={2}
-              position={[0, -2.0, 0]}
+              position={[0, -1.8, 0]}
             />
             {children}
           </group>
@@ -93,4 +93,3 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
     </div>
   );
 };
-
