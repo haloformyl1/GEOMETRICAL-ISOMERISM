@@ -7,6 +7,37 @@ import { useStore } from '../../store/useStore';
 import { BilingualText } from '../BilingualText';
 import { RefreshCw, Zap, Compass } from 'lucide-react';
 
+// Typographic Subscript Label for CH3 to prevent missing font glyph "tofu" [?]
+const MethylLabel: React.FC<{ position?: [number, number, number] }> = ({
+  position = [0, 0.48, 0],
+}) => (
+  <Billboard position={position}>
+    <group position={[-0.03, 0, 0]}>
+      <Text
+        fontSize={0.24}
+        color="#7dd3fc"
+        anchorX="right"
+        anchorY="middle"
+        outlineWidth={0.02}
+        outlineColor="#040d1a"
+      >
+        CH
+      </Text>
+      <Text
+        fontSize={0.16}
+        color="#7dd3fc"
+        anchorX="left"
+        anchorY="middle"
+        position={[0.02, -0.06, 0]}
+        outlineWidth={0.015}
+        outlineColor="#040d1a"
+      >
+        3
+      </Text>
+    </group>
+  </Billboard>
+);
+
 interface RotatingMoleculeProps {
   isCis: boolean;
   animated: boolean;
@@ -69,8 +100,13 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
           />
         </Sphere>
         <Billboard position={[0, 0.45, 0]}>
-          <Text fontSize={0.18} color="#38bdf8">
-            C1 (sp²)
+          <Text
+            fontSize={0.18}
+            color="#38bdf8"
+            outlineWidth={0.02}
+            outlineColor="#040d1a"
+          >
+            C1
           </Text>
         </Billboard>
       </group>
@@ -89,8 +125,13 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
           />
         </Sphere>
         <Billboard position={[0, 0.45, 0]}>
-          <Text fontSize={0.18} color="#38bdf8">
-            C2 (sp²)
+          <Text
+            fontSize={0.18}
+            color="#38bdf8"
+            outlineWidth={0.02}
+            outlineColor="#040d1a"
+          >
+            C2
           </Text>
         </Billboard>
       </group>
@@ -140,11 +181,7 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
             clearcoatRoughness={0.1}
           />
         </Sphere>
-        <Billboard position={[0, 0.48, 0]}>
-          <Text fontSize={0.24} color="#7dd3fc">
-            CH₃
-          </Text>
-        </Billboard>
+        <MethylLabel position={[0, 0.48, 0]} />
       </group>
       {/* Single bond C1 - Methyl */}
       <group position={[-1.2, 0.46, 0]} rotation={[0, 0, 0.806]}>
@@ -173,7 +210,12 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
           />
         </Sphere>
         <Billboard position={[0, -0.38, 0]}>
-          <Text fontSize={0.22} color="#cbd5e1">
+          <Text
+            fontSize={0.22}
+            color="#cbd5e1"
+            outlineWidth={0.02}
+            outlineColor="#040d1a"
+          >
             H
           </Text>
         </Billboard>
@@ -210,11 +252,7 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
               clearcoatRoughness={0.1}
             />
           </Sphere>
-          <Billboard position={[0, 0.48, 0]}>
-            <Text fontSize={0.24} color="#7dd3fc">
-              CH₃
-            </Text>
-          </Billboard>
+          <MethylLabel position={[0, 0.48, 0]} />
         </group>
         {/* Single bond C2 - Methyl */}
         <group position={[0.48, 0.46, 0]} rotation={[0, 0, -0.806]}>
@@ -243,7 +281,12 @@ const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
             />
           </Sphere>
           <Billboard position={[0, -0.38, 0]}>
-            <Text fontSize={0.22} color="#cbd5e1">
+            <Text
+              fontSize={0.22}
+              color="#cbd5e1"
+              outlineWidth={0.02}
+              outlineColor="#040d1a"
+            >
               H
             </Text>
           </Billboard>
