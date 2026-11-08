@@ -67,7 +67,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -157,7 +157,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -261,7 +261,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -351,7 +351,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -455,7 +455,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -545,7 +545,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -649,7 +649,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -739,7 +739,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -843,7 +843,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -933,7 +933,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -1037,7 +1037,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -1127,7 +1127,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -1231,7 +1231,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -1321,7 +1321,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -1425,7 +1425,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -1515,7 +1515,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -1619,7 +1619,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -1709,7 +1709,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -1903,7 +1903,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "Ph"
@@ -2097,7 +2097,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "4-NMe2-Ph"
@@ -2291,7 +2291,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "H"
@@ -2485,7 +2485,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "CH3"
@@ -2679,7 +2679,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "Ph"
@@ -2783,7 +2783,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -2873,7 +2873,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -2977,7 +2977,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -3067,7 +3067,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -3171,7 +3171,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -3261,7 +3261,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -3365,7 +3365,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -3455,7 +3455,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -3559,7 +3559,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -3649,7 +3649,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -3843,7 +3843,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "Fused"
@@ -4037,7 +4037,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "Bridged"
@@ -4231,7 +4231,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "C",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "Trithiane"
@@ -4335,7 +4335,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -4425,7 +4425,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -4529,7 +4529,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -4619,7 +4619,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -4723,7 +4723,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -4813,7 +4813,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
@@ -4917,7 +4917,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            1.0,
+            -1.0,
             0
           ],
           "label": "OH"
@@ -5007,7 +5007,7 @@ export const SYN_ANTI_EXAMPLES: IsomerPair[] = [
           "element": "O",
           "position": [
             1.5,
-            -1.0,
+            1.0,
             0
           ],
           "label": "OH"
