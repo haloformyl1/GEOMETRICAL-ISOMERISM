@@ -68,7 +68,10 @@ export const Home: React.FC = () => {
 
         {/* Right Hero 3D Frame */}
         <div className="animate-fade-in-up md:min-w-0">
-          <div className="lab-frame min-h-[420px] md:min-h-[560px] rounded-3xl border border-[rgba(165,214,255,0.18)] bg-[#0a182c]/85 shadow-[0_24px_64px_rgba(0,0,0,0.38)] backdrop-blur-xl">
+          <div
+            className="lab-frame min-h-[420px] md:min-h-[560px] rounded-3xl border border-[rgba(165,214,255,0.18)] bg-[#0a182c]/85 shadow-[0_24px_64px_rgba(0,0,0,0.38)] backdrop-blur-xl"
+            aria-label="Animated geometrical isomerism alkene preview"
+          >
             <div className="lab-frame-toolbar border-b border-[rgba(165,214,255,0.14)] bg-[#0c2038]/80">
               <div className="lab-frame-toolbar-title flex min-w-0 items-center gap-3">
                 <span className="status-dot" aria-hidden="true" />
@@ -80,11 +83,11 @@ export const Home: React.FC = () => {
                 </div>
               </div>
               <span className="hidden rounded-lg border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-[11px] font-semibold text-cyan-200 sm:inline">
-                Drag to rotate
+                Drag to inspect
               </span>
             </div>
 
-            <div className="relative min-h-[480px] flex-1 overflow-hidden">
+            <div className="crystal-grid relative min-h-0 flex-1 overflow-hidden">
               <HeroMoleculeAnimation />
             </div>
           </div>

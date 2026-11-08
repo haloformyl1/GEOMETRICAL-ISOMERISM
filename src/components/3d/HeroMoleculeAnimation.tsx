@@ -1,154 +1,582 @@
-import React, { useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { MolecularCanvas } from './MolecularCanvas';
-import { Sphere, Cylinder, Text } from '@react-three/drei';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { AppCanvas as Canvas } from '../ui/AppCanvas';
+import { Sphere, Cylinder, Cone, OrbitControls, Billboard, Text, Line } from '@react-three/drei';
 import * as THREE from 'three';
+import { useStore } from '../../store/useStore';
 import { BilingualText } from '../BilingualText';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Zap, Compass } from 'lucide-react';
 
-const RotatingMolecule = ({ isCis }: { isCis: boolean }) => {
-  const group = useRef<THREE.Group>(null);
+interface RotatingMoleculeProps {
+  isCis: boolean;
+  animated: boolean;
+  showOrbitals: boolean;
+  showDipole: boolean;
+}
 
-  useFrame((state) => {
-    if (group.current) {
-      group.current.rotation.y = state.clock.elapsedTime * 0.35;
-      group.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.2;
+const RotatingMolecule: React.FC<RotatingMoleculeProps> = ({
+  isCis,
+  animated,
+  showOrbitals,
+  showDipole,
+}) => {
+  const groupRef = useRef<THREE.Group>(null);
+  const c2GroupRef = useRef<THREE.Group>(null);
+  const currentAngle = useRef<number>(isCis ? 0 : Math.PI);
+  const { size } = useThree();
+  const compact = size.width < 480 || size.width / Math.max(size.height, 1) < 0.95;
+
+  useFrame((state, delta) => {
+    // 1. Continuous smooth orbital tumbling & gentle levitation (Solid-State Chemistry style)
+    if (groupRef.current && animated) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.22;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.12) * 0.14;
+      // Gentle floating bob
+      groupRef.current.position.y = (compact ? 0.22 : 0.32) + Math.sin(state.clock.elapsedTime * 0.75) * 0.08;
+    }
+
+    // 2. Physics-damped rotation of C2 substituents around the C=C bond axis
+    const targetAngle = isCis ? 0 : Math.PI;
+    if (c2GroupRef.current) {
+      currentAngle.current = THREE.MathUtils.damp(currentAngle.current, targetAngle, 7.5, delta);
+      c2GroupRef.current.rotation.x = currentAngle.current;
     }
   });
 
-  // Target positions for C2 substituents:
-  // in cis: methyl up [1.6, 1.1, 0], H down [1.6, -1.1, 0]
-  // in trans: methyl down [1.6, -1.1, 0], H up [1.6, 1.1, 0]
-  const pMethyl: [number, number, number] = isCis ? [1.6, 1.1, 0] : [1.6, -1.1, 0];
-  const pHydrogen: [number, number, number] = isCis ? [1.6, -1.1, 0] : [1.6, 1.1, 0];
+  // Calculate dipole visibility factor (1 for Cis, 0 for Trans)
+  const dipoleFactor = Math.max(0, Math.cos(currentAngle.current / 2));
+
+  // Overlap efficiency between p-orbitals
+  const overlapCos = Math.max(0, Math.cos(currentAngle.current));
 
   return (
-    <group ref={group} scale={1.25}>
-      {/* C1 [-0.75, 0, 0] */}
-      <group position={[-0.75, 0, 0]}>
-        <Sphere args={[0.42, 32, 32]}>
-          <meshStandardMaterial color="#334155" roughness={0.3} metalness={0.2} emissive="#0284c7" emissiveIntensity={0.2} />
+    <group
+      ref={groupRef}
+      position={[0, compact ? 0.22 : 0.32, 0]}
+      scale={compact ? 0.95 : 1.15}
+    >
+      {/* ────────────────── C1 ATOM [-0.72, 0, 0] ────────────────── */}
+      <group position={[-0.72, 0, 0]}>
+        <Sphere args={[0.34, 32, 32]}>
+          <meshPhysicalMaterial
+            color="#1e293b"
+            emissive="#0284c7"
+            emissiveIntensity={0.22}
+            metalness={0.25}
+            roughness={0.2}
+            clearcoat={0.95}
+            clearcoatRoughness={0.1}
+          />
         </Sphere>
+        <Billboard position={[0, 0.45, 0]}>
+          <Text fontSize={0.18} color="#38bdf8">
+            C1 (sp²)
+          </Text>
+        </Billboard>
       </group>
 
-      {/* C2 [0.75, 0, 0] */}
-      <group position={[0.75, 0, 0]}>
-        <Sphere args={[0.42, 32, 32]}>
-          <meshStandardMaterial color="#334155" roughness={0.3} metalness={0.2} emissive="#0284c7" emissiveIntensity={0.2} />
+      {/* ────────────────── C2 ATOM [0.72, 0, 0] ────────────────── */}
+      <group position={[0.72, 0, 0]}>
+        <Sphere args={[0.34, 32, 32]}>
+          <meshPhysicalMaterial
+            color="#1e293b"
+            emissive="#0284c7"
+            emissiveIntensity={0.22}
+            metalness={0.25}
+            roughness={0.2}
+            clearcoat={0.95}
+            clearcoatRoughness={0.1}
+          />
         </Sphere>
+        <Billboard position={[0, 0.45, 0]}>
+          <Text fontSize={0.18} color="#38bdf8">
+            C2 (sp²)
+          </Text>
+        </Billboard>
       </group>
 
-      {/* C=C Double Bond */}
+      {/* ──────────── C=C DOUBLE BOND (Parallel cylinders) ──────────── */}
+      {/* Upper/Front component */}
       <group position={[0, 0, 0.08]} rotation={[0, 0, Math.PI / 2]}>
-        <Cylinder args={[0.065, 0.065, 1.5, 16]}>
-          <meshStandardMaterial color="#38bdf8" roughness={0.3} metalness={0.2} emissive="#0369a1" emissiveIntensity={0.3} />
+        <Cylinder args={[0.052, 0.052, 1.44, 20]}>
+          <meshPhysicalMaterial
+            color="#38bdf8"
+            emissive="#0284c7"
+            emissiveIntensity={0.4}
+            metalness={0.3}
+            roughness={0.18}
+            clearcoat={0.8}
+          />
         </Cylinder>
       </group>
+      {/* Lower/Back component */}
       <group position={[0, 0, -0.08]} rotation={[0, 0, Math.PI / 2]}>
-        <Cylinder args={[0.065, 0.065, 1.5, 16]}>
-          <meshStandardMaterial color="#38bdf8" roughness={0.3} metalness={0.2} emissive="#0369a1" emissiveIntensity={0.3} />
+        <Cylinder args={[0.052, 0.052, 1.44, 20]}>
+          <meshPhysicalMaterial
+            color="#38bdf8"
+            emissive="#0284c7"
+            emissiveIntensity={0.4}
+            metalness={0.3}
+            roughness={0.18}
+            clearcoat={0.8}
+          />
         </Cylinder>
       </group>
 
-      {/* C1 Substituents (Static) */}
-      {/* Methyl 1 [-1.6, 1.1, 0] */}
-      <group position={[-1.6, 1.1, 0]}>
-        <Sphere args={[0.38, 32, 32]}>
-          <meshStandardMaterial color="#0284c7" roughness={0.25} metalness={0.2} />
+      {/* ──────────── C1 SUBSTITUENTS (Left side - Static) ──────────── */}
+      {/* C1 - Methyl group (Top left) */}
+      <group position={[-1.68, 0.92, 0]}>
+        <Sphere args={[0.34, 32, 32]}>
+          <meshPhysicalMaterial
+            color="#38bdf8"
+            emissive="#0369a1"
+            emissiveIntensity={0.25}
+            metalness={0.15}
+            roughness={0.18}
+            transmission={0.18}
+            thickness={0.7}
+            ior={1.45}
+            clearcoat={1.0}
+            clearcoatRoughness={0.1}
+          />
         </Sphere>
-        <Text position={[0, 0.5, 0]} fontSize={0.26} color="#38bdf8">CH3</Text>
+        <Billboard position={[0, 0.48, 0]}>
+          <Text fontSize={0.24} color="#7dd3fc">
+            CH₃
+          </Text>
+        </Billboard>
       </group>
-      {/* Single bond C1-Methyl */}
-      <Cylinder args={[0.07, 0.07, 1.4, 16]} position={[-1.17, 0.55, 0]} rotation={[0, 0, -Math.PI / 3.4]}>
-        <meshStandardMaterial color="#64748b" />
-      </Cylinder>
+      {/* Single bond C1 - Methyl */}
+      <group position={[-1.2, 0.46, 0]} rotation={[0, 0, 0.806]}>
+        <Cylinder args={[0.055, 0.055, 1.33, 16]}>
+          <meshPhysicalMaterial
+            color="#64748b"
+            emissive="#1e293b"
+            emissiveIntensity={0.2}
+            metalness={0.3}
+            roughness={0.25}
+            clearcoat={0.6}
+          />
+        </Cylinder>
+      </group>
 
-      {/* Hydrogen 1 [-1.6, -1.1, 0] */}
-      <group position={[-1.6, -1.1, 0]}>
-        <Sphere args={[0.26, 32, 32]}>
-          <meshStandardMaterial color="#ffffff" roughness={0.2} />
+      {/* C1 - Hydrogen (Bottom left) */}
+      <group position={[-1.68, -0.92, 0]}>
+        <Sphere args={[0.22, 32, 32]}>
+          <meshPhysicalMaterial
+            color="#f8fafc"
+            emissive="#94a3b8"
+            emissiveIntensity={0.18}
+            metalness={0.1}
+            roughness={0.18}
+            clearcoat={0.9}
+          />
         </Sphere>
-        <Text position={[0, -0.4, 0]} fontSize={0.24} color="#94a3b8">H</Text>
+        <Billboard position={[0, -0.38, 0]}>
+          <Text fontSize={0.22} color="#cbd5e1">
+            H
+          </Text>
+        </Billboard>
       </group>
-      {/* Single bond C1-H */}
-      <Cylinder args={[0.07, 0.07, 1.4, 16]} position={[-1.17, -0.55, 0]} rotation={[0, 0, Math.PI / 3.4]}>
-        <meshStandardMaterial color="#64748b" />
-      </Cylinder>
+      {/* Single bond C1 - Hydrogen */}
+      <group position={[-1.2, -0.46, 0]} rotation={[0, 0, -0.806]}>
+        <Cylinder args={[0.05, 0.05, 1.33, 16]}>
+          <meshPhysicalMaterial
+            color="#64748b"
+            emissive="#1e293b"
+            emissiveIntensity={0.2}
+            metalness={0.3}
+            roughness={0.25}
+            clearcoat={0.6}
+          />
+        </Cylinder>
+      </group>
 
-      {/* C2 Substituents (Dynamic according to isCis) */}
-      {/* Methyl 2 */}
-      <group position={pMethyl}>
-        <Sphere args={[0.38, 32, 32]}>
-          <meshStandardMaterial color="#0284c7" roughness={0.25} metalness={0.2} />
-        </Sphere>
-        <Text position={[0, isCis ? 0.5 : -0.5, 0]} fontSize={0.26} color="#38bdf8">CH3</Text>
-      </group>
-      <Cylinder
-        args={[0.07, 0.07, 1.4, 16]}
-        position={[1.17, isCis ? 0.55 : -0.55, 0]}
-        rotation={[0, 0, isCis ? Math.PI / 3.4 : -Math.PI / 3.4]}
-      >
-        <meshStandardMaterial color="#64748b" />
-      </Cylinder>
+      {/* ───── C2 SUBSTITUENTS (Right side - Dynamically rotating group) ───── */}
+      <group ref={c2GroupRef} position={[0.72, 0, 0]}>
+        {/* Relative Methyl substituent */}
+        <group position={[0.96, 0.92, 0]}>
+          <Sphere args={[0.34, 32, 32]}>
+            <meshPhysicalMaterial
+              color="#38bdf8"
+              emissive="#0369a1"
+              emissiveIntensity={0.25}
+              metalness={0.15}
+              roughness={0.18}
+              transmission={0.18}
+              thickness={0.7}
+              ior={1.45}
+              clearcoat={1.0}
+              clearcoatRoughness={0.1}
+            />
+          </Sphere>
+          <Billboard position={[0, 0.48, 0]}>
+            <Text fontSize={0.24} color="#7dd3fc">
+              CH₃
+            </Text>
+          </Billboard>
+        </group>
+        {/* Single bond C2 - Methyl */}
+        <group position={[0.48, 0.46, 0]} rotation={[0, 0, -0.806]}>
+          <Cylinder args={[0.055, 0.055, 1.33, 16]}>
+            <meshPhysicalMaterial
+              color="#64748b"
+              emissive="#1e293b"
+              emissiveIntensity={0.2}
+              metalness={0.3}
+              roughness={0.25}
+              clearcoat={0.6}
+            />
+          </Cylinder>
+        </group>
 
-      {/* Hydrogen 2 */}
-      <group position={pHydrogen}>
-        <Sphere args={[0.26, 32, 32]}>
-          <meshStandardMaterial color="#ffffff" roughness={0.2} />
-        </Sphere>
-        <Text position={[0, isCis ? -0.4 : 0.4, 0]} fontSize={0.24} color="#94a3b8">H</Text>
+        {/* Relative Hydrogen substituent */}
+        <group position={[0.96, -0.92, 0]}>
+          <Sphere args={[0.22, 32, 32]}>
+            <meshPhysicalMaterial
+              color="#f8fafc"
+              emissive="#94a3b8"
+              emissiveIntensity={0.18}
+              metalness={0.1}
+              roughness={0.18}
+              clearcoat={0.9}
+            />
+          </Sphere>
+          <Billboard position={[0, -0.38, 0]}>
+            <Text fontSize={0.22} color="#cbd5e1">
+              H
+            </Text>
+          </Billboard>
+        </group>
+        {/* Single bond C2 - Hydrogen */}
+        <group position={[0.48, -0.46, 0]} rotation={[0, 0, 0.806]}>
+          <Cylinder args={[0.05, 0.05, 1.33, 16]}>
+            <meshPhysicalMaterial
+              color="#64748b"
+              emissive="#1e293b"
+              emissiveIntensity={0.2}
+              metalness={0.3}
+              roughness={0.25}
+              clearcoat={0.6}
+            />
+          </Cylinder>
+        </group>
       </group>
-      <Cylinder
-        args={[0.07, 0.07, 1.4, 16]}
-        position={[1.17, isCis ? -0.55 : 0.55, 0]}
-        rotation={[0, 0, isCis ? -Math.PI / 3.4 : Math.PI / 3.4]}
-      >
-        <meshStandardMaterial color="#64748b" />
-      </Cylinder>
+
+      {/* ──────────── 3D DIPOLE MOMENT VECTOR (Cis polar vs Trans cancelled) ──────────── */}
+      {showDipole && (
+        <group position={[0, 0.1, 0]} scale={[dipoleFactor, dipoleFactor, dipoleFactor]}>
+          {dipoleFactor > 0.08 && (
+            <>
+              {/* Golden vector shaft */}
+              <group position={[0, 0.75, 0]}>
+                <Cylinder args={[0.038, 0.038, 0.75, 16]}>
+                  <meshStandardMaterial
+                    color="#f59e0b"
+                    emissive="#d97706"
+                    emissiveIntensity={0.8}
+                    roughness={0.2}
+                  />
+                </Cylinder>
+              </group>
+              {/* Golden vector arrowhead */}
+              <group position={[0, 1.25, 0]}>
+                <Cone args={[0.11, 0.28, 16]}>
+                  <meshStandardMaterial
+                    color="#fbbf24"
+                    emissive="#f59e0b"
+                    emissiveIntensity={1.0}
+                    roughness={0.2}
+                  />
+                </Cone>
+              </group>
+              {/* Billboard text label */}
+              <Billboard position={[0, 1.58, 0]}>
+                <Text fontSize={0.25} color="#fbbf24">
+                  μ = 0.33 D
+                </Text>
+              </Billboard>
+            </>
+          )}
+        </group>
+      )}
+
+      {/* ──────────── RESTRICTED ROTATION π-ORBITALS ──────────── */}
+      {showOrbitals && (
+        <group>
+          {/* C1 2py upper lobe */}
+          <Sphere args={[0.26, 24, 24]} position={[-0.72, 0.72, 0]} scale={[0.8, 1.4, 0.8]}>
+            <meshPhysicalMaterial
+              color="#22d3ee"
+              emissive="#0891b2"
+              emissiveIntensity={0.35}
+              transparent
+              opacity={0.42}
+              roughness={0.2}
+              transmission={0.3}
+            />
+          </Sphere>
+          {/* C1 2py lower lobe */}
+          <Sphere args={[0.26, 24, 24]} position={[-0.72, -0.72, 0]} scale={[0.8, 1.4, 0.8]}>
+            <meshPhysicalMaterial
+              color="#0284c7"
+              emissive="#0369a1"
+              emissiveIntensity={0.35}
+              transparent
+              opacity={0.42}
+              roughness={0.2}
+              transmission={0.3}
+            />
+          </Sphere>
+
+          {/* C2 2py upper lobe */}
+          <Sphere
+            args={[0.26, 24, 24]}
+            position={[
+              0.72,
+              0.72 * Math.cos(currentAngle.current),
+              0.72 * Math.sin(currentAngle.current),
+            ]}
+            scale={[0.8, 1.4, 0.8]}
+          >
+            <meshPhysicalMaterial
+              color="#22d3ee"
+              emissive="#0891b2"
+              emissiveIntensity={0.35}
+              transparent
+              opacity={0.42 * overlapCos}
+              roughness={0.2}
+              transmission={0.3}
+            />
+          </Sphere>
+          {/* C2 2py lower lobe */}
+          <Sphere
+            args={[0.26, 24, 24]}
+            position={[
+              0.72,
+              -0.72 * Math.cos(currentAngle.current),
+              -0.72 * Math.sin(currentAngle.current),
+            ]}
+            scale={[0.8, 1.4, 0.8]}
+          >
+            <meshPhysicalMaterial
+              color="#0284c7"
+              emissive="#0369a1"
+              emissiveIntensity={0.35}
+              transparent
+              opacity={0.42 * overlapCos}
+              roughness={0.2}
+              transmission={0.3}
+            />
+          </Sphere>
+
+          {/* Parallel overlap connection lines */}
+          {overlapCos > 0.2 && (
+            <>
+              <Line
+                points={[
+                  [-0.72, 0.72, 0],
+                  [0.72, 0.72 * Math.cos(currentAngle.current), 0.72 * Math.sin(currentAngle.current)],
+                ]}
+                color="#38bdf8"
+                lineWidth={2}
+                transparent
+                opacity={0.6 * overlapCos}
+                dashed
+                dashScale={12}
+              />
+              <Line
+                points={[
+                  [-0.72, -0.72, 0],
+                  [0.72, -0.72 * Math.cos(currentAngle.current), -0.72 * Math.sin(currentAngle.current)],
+                ]}
+                color="#38bdf8"
+                lineWidth={2}
+                transparent
+                opacity={0.6 * overlapCos}
+                dashed
+                dashScale={12}
+              />
+            </>
+          )}
+        </group>
+      )}
     </group>
   );
 };
 
+const ResponsiveHeroCamera: React.FC = () => {
+  const { camera, size, invalidate } = useThree();
+
+  useEffect(() => {
+    const compact = size.width < 480 || size.width / Math.max(size.height, 1) < 0.95;
+    const position: [number, number, number] = compact ? [0, 0.35, 6.2] : [0, 0.45, 5.0];
+
+    camera.position.set(...position);
+    camera.zoom = 1;
+    camera.lookAt(0, 0.15, 0);
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.fov = compact ? 42 : 36;
+      camera.updateProjectionMatrix();
+    }
+    invalidate();
+  }, [camera, invalidate, size.height, size.width]);
+
+  return null;
+};
+
 export const HeroMoleculeAnimation: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useStore((state) => state.reducedMotion);
+  const [inView, setInView] = useState(true);
   const [isCis, setIsCis] = useState(true);
+  const [showOrbitals, setShowOrbitals] = useState(false);
+  const [showDipole, setShowDipole] = useState(true);
+
+  useEffect(() => {
+    if (!containerRef.current || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      rootMargin: '120px',
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const animated = inView && !reducedMotion;
 
   return (
-    <div className="relative h-full w-full min-h-[380px]">
-      <MolecularCanvas cameraPosition={[0, 1.5, 5.2]}>
-        <RotatingMolecule isCis={isCis} />
-      </MolecularCanvas>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(14,165,233,0.12),transparent_48%)]"
+      role="img"
+      aria-label="Animated Geometrical Isomerism But-2-ene Transformation"
+    >
+      <Canvas
+        showCameraControls={false}
+        camera={{ position: [0, 0.45, 5.0], fov: 36 }}
+        dpr={[1, typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 1.6]}
+        frameloop={animated ? 'always' : 'demand'}
+      >
+        <ResponsiveHeroCamera />
+        <ambientLight intensity={0.78} />
+        <pointLight position={[10, 10, 10]} intensity={1.35} color="#e0f2fe" />
+        <pointLight position={[-10, -8, -10]} intensity={0.65} color="#2dd4bf" />
+        <pointLight position={[0, -5, 6]} intensity={0.4} color="#38bdf8" />
+        <RotatingMolecule
+          isCis={isCis}
+          animated={animated}
+          showOrbitals={showOrbitals}
+          showDipole={showDipole}
+        />
+        <OrbitControls
+          target={[0, 0.15, 0]}
+          enableZoom={false}
+          enablePan={false}
+          enableDamping
+          dampingFactor={0.08}
+        />
+      </Canvas>
 
-      {/* Interactive Morph Pill Overlay */}
-      <div className="absolute top-4 right-4 z-10">
+      {/* ────────────────── TOP-RIGHT INTERACTIVE CONTROLS ────────────────── */}
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex flex-wrap items-center justify-end gap-2">
+        {/* Toggle Orbitals */}
+        <button
+          type="button"
+          onClick={() => setShowOrbitals(!showOrbitals)}
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
+            showOrbitals
+              ? 'border-cyan-400 bg-cyan-500/25 text-white shadow-[0_0_16px_rgba(6,182,212,0.4)]'
+              : 'border-[rgba(165,214,255,0.18)] bg-[#07192b]/80 text-[#a9bfd2] hover:bg-cyan-500/15 hover:text-cyan-200'
+          }`}
+          title="Toggle π-Orbital overlap visualization"
+        >
+          <Zap className="h-3.5 w-3.5 text-cyan-400" />
+          <span className="hidden sm:inline">π-Orbitals</span>
+        </button>
+
+        {/* Toggle Dipole */}
+        <button
+          type="button"
+          onClick={() => setShowDipole(!showDipole)}
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
+            showDipole
+              ? 'border-amber-400 bg-amber-500/25 text-white shadow-[0_0_16px_rgba(245,158,11,0.4)]'
+              : 'border-[rgba(165,214,255,0.18)] bg-[#07192b]/80 text-[#a9bfd2] hover:bg-amber-500/15 hover:text-amber-200'
+          }`}
+          title="Toggle Net Dipole Moment Vector"
+        >
+          <Compass className="h-3.5 w-3.5 text-amber-400" />
+          <span className="hidden sm:inline">Dipole (μ)</span>
+        </button>
+
+        {/* Primary Isomer Morph Button */}
         <button
           type="button"
           onClick={() => setIsCis(!isCis)}
-          className="flex items-center gap-2 rounded-xl border border-cyan-400/40 bg-[#06182c]/85 px-4 py-2 text-xs font-bold text-cyan-300 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:bg-cyan-500/20 hover:text-white transition-all cursor-pointer"
+          className="flex items-center gap-2 rounded-xl border border-cyan-400/40 bg-[#06182c]/85 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-cyan-300 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:bg-cyan-500/25 hover:text-white transition-all cursor-pointer"
         >
-          <RefreshCw className="h-3.5 w-3.5 animate-spin-slow" />
-          <span>
-            {isCis ? 'Switch to Trans-But-2-ene' : 'Switch to Cis-But-2-ene'}
-          </span>
+          <RefreshCw className="h-3.5 w-3.5 text-cyan-300 animate-spin-slow" />
+          <span>{isCis ? 'Switch to Trans-Isomer' : 'Switch to Cis-Isomer'}</span>
         </button>
       </div>
 
-      <div className="pointer-events-none absolute bottom-4 inset-x-4 flex items-center justify-between rounded-xl border border-cyan-500/20 bg-[#07192b]/85 px-4 py-3 backdrop-blur-md">
-        <div>
-          <p className="text-sm font-extrabold text-cyan-200">
-            {isCis ? 'Cis-But-2-ene (Z-Isomer)' : 'Trans-But-2-ene (E-Isomer)'}
-          </p>
-          <p className="text-xs text-slate-300">
-            {isCis
-              ? 'Both bulky methyl groups (-CH3) lie on the same side of the double bond.'
-              : 'Methyl groups lie on opposite sides, minimizing steric congestion.'}
-          </p>
+      {/* ────────────────── BOTTOM FLOATING INFO CARD ────────────────── */}
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 sm:inset-x-5 sm:bottom-5 rounded-2xl border border-[rgba(165,214,255,0.18)] bg-[#07192b]/90 p-3.5 sm:p-4 text-xs backdrop-blur-md shadow-[0_16px_36px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span
+              className={`inline-block h-2.5 w-2.5 rounded-full ${
+                isCis
+                  ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]'
+                  : 'bg-purple-400 shadow-[0_0_8px_#c084fc]'
+              }`}
+            />
+            <p className="font-extrabold text-[#edf8ff] text-sm tracking-tight">
+              {isCis ? 'Cis-But-2-ene (Z-Isomer)' : 'Trans-But-2-ene (E-Isomer)'}
+            </p>
+            <span className="rounded bg-cyan-950/80 px-1.5 py-0.5 text-[10px] font-mono font-bold uppercase text-cyan-300 border border-cyan-500/30">
+              {isCis ? 'Z-Alkene' : 'E-Alkene'}
+            </span>
+          </div>
+          <div className="text-[11px] leading-relaxed text-[#c5d8e4] max-w-[50ch]">
+            {isCis ? (
+              <BilingualText
+                en="Bulky methyl groups (-CH₃) lie on the same side of the C=C double bond, generating a net dipole moment and higher boiling point."
+                bn="উভয় মিথাইল গ্রুপ (-CH₃) দ্বিবন্ধনের একই পাশে অবস্থিত হওয়ায় নেট ডাইপোল মোমেন্ট সৃষ্টি হয় ও স্ফুটনাঙ্ক বৃদ্ধি পায়।"
+              />
+            ) : (
+              <BilingualText
+                en="Bulky methyl groups lie diagonally opposite across the C=C bond, causing bond dipole cancellation and tighter crystal packing."
+                bn="মিথাইল গ্রুপ দুটি বিপরীত পাশে থাকায় বন্ড ডাইপোল মোমেন্ট বাতিল হয় এবং স্ফটিক ল্যাটিসে সুষম প্যাকিংয়ের ফলে গলনাঙ্ক বৃদ্ধি পায়।"
+              />
+            )}
+          </div>
         </div>
-        <div className="text-right font-mono text-xs text-cyan-400">
-          <p>μ = {isCis ? '0.33 D' : '0.00 D'}</p>
-          <p>b.p. = {isCis ? '+3.7°C' : '+0.9°C'}</p>
+
+        {/* Key Chemical Metrics Badge */}
+        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-[rgba(165,214,255,0.15)] pt-2 sm:pt-0 sm:pl-4 font-mono text-[11px]">
+          <div className="text-left sm:text-right">
+            <p className="text-[#a9bfd2]">
+              Dipole:{' '}
+              <span className={`font-bold ${isCis ? 'text-amber-300' : 'text-slate-400'}`}>
+                {isCis ? 'μ = 0.33 D' : 'μ = 0.00 D'}
+              </span>
+            </p>
+            <p className="text-[#a9bfd2]">
+              b.p.:{' '}
+              <span className="font-bold text-cyan-300">
+                {isCis ? '+3.7 °C' : '+0.9 °C'}
+              </span>
+            </p>
+            <p className="text-[#a9bfd2]">
+              m.p.:{' '}
+              <span className="font-bold text-emerald-300">
+                {isCis ? '-138.9 °C' : '-105.6 °C'}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
