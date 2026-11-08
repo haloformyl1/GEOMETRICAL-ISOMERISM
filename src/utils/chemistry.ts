@@ -7,18 +7,18 @@ export interface ElementCPK {
 }
 
 export const ELEMENT_DATA: Record<string, ElementCPK> = {
-  H:  { color: '#ffffff', radius: 0.28, atomicNumber: 1 },
-  D:  { color: '#e0e7ff', radius: 0.28, atomicNumber: 1 }, // Deuterium
-  T:  { color: '#c7d2fe', radius: 0.28, atomicNumber: 1 }, // Tritium
-  C:  { color: '#334155', radius: 0.44, atomicNumber: 6 },
-  N:  { color: '#3b82f6', radius: 0.42, atomicNumber: 7 },
-  O:  { color: '#ef4444', radius: 0.40, atomicNumber: 8 },
-  F:  { color: '#22c55e', radius: 0.38, atomicNumber: 9 },
+  H: { color: '#ffffff', radius: 0.28, atomicNumber: 1 },
+  D: { color: '#e0e7ff', radius: 0.28, atomicNumber: 1 }, // Deuterium
+  T: { color: '#c7d2fe', radius: 0.28, atomicNumber: 1 }, // Tritium
+  C: { color: '#334155', radius: 0.44, atomicNumber: 6 },
+  N: { color: '#3b82f6', radius: 0.42, atomicNumber: 7 },
+  O: { color: '#ef4444', radius: 0.40, atomicNumber: 8 },
+  F: { color: '#22c55e', radius: 0.38, atomicNumber: 9 },
   Cl: { color: '#10b981', radius: 0.52, atomicNumber: 17 },
   Br: { color: '#991b1b', radius: 0.58, atomicNumber: 35 },
-  I:  { color: '#7e22ce', radius: 0.65, atomicNumber: 53 },
-  P:  { color: '#f97316', radius: 0.50, atomicNumber: 15 },
-  S:  { color: '#eab308', radius: 0.52, atomicNumber: 16 },
+  I: { color: '#7e22ce', radius: 0.65, atomicNumber: 53 },
+  P: { color: '#f97316', radius: 0.50, atomicNumber: 15 },
+  S: { color: '#eab308', radius: 0.52, atomicNumber: 16 },
   Pt: { color: '#94a3b8', radius: 0.62, atomicNumber: 78 },
   Co: { color: '#0284c7', radius: 0.60, atomicNumber: 27 },
 };
