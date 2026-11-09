@@ -64,11 +64,15 @@ export const BondRotationSimulator: React.FC = () => {
     let currentDeg = angle;
     let pauseStartTime = 0;
     let springTime = 0;
+    let previousTimestamp: number | null = null;
     const initialReleaseAngle = 90;
 
     const loop = (timestamp: number) => {
+      const elapsedSeconds = previousTimestamp === null ? 0 : (timestamp - previousTimestamp) / 1000;
+      previousTimestamp = timestamp;
+
       if (stage === 'twist') {
-        currentDeg += 1.2;
+        currentDeg += 72 * elapsedSeconds;
         if (currentDeg >= 90) {
           currentDeg = 90;
           stage = 'pause';
@@ -83,7 +87,7 @@ export const BondRotationSimulator: React.FC = () => {
         }
         animRef.current = requestAnimationFrame(loop);
       } else if (stage === 'springBack') {
-        springTime += 0.045;
+        springTime += elapsedSeconds * 2.7;
         // Damped harmonic oscillation back to 0 degrees: A * exp(-gamma * t) * cos(omega * t)
         const damping = Math.exp(-springTime * 3.2);
         const oscillation = Math.cos(springTime * 14);
@@ -112,10 +116,12 @@ export const BondRotationSimulator: React.FC = () => {
     const target = angle < 110 ? 0 : 180;
     let current = angle;
     let t = 0;
+    let previousTimestamp: number | null = null;
     const startAngle = angle;
 
-    const snap = () => {
-      t += 0.05;
+    const snap = (timestamp: number) => {
+      if (previousTimestamp !== null) t += (timestamp - previousTimestamp) * 0.003;
+      previousTimestamp = timestamp;
       const progress = 1 - Math.exp(-t * 4);
       current = startAngle + (target - startAngle) * progress;
 
@@ -267,7 +273,7 @@ export const BondRotationSimulator: React.FC = () => {
 
       {/* 3D Canvas Viewport */}
       <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
-        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
+        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={isSimulating ? 'always' : 'demand'}>
           {/* C1 (Static at [-1, 0, 0]) */}
           <group position={[-1, 0, 0]}>
             <Sphere args={[0.45, 32, 32]}>
@@ -374,7 +380,7 @@ export const BondRotationSimulator: React.FC = () => {
               visible={showLines}
               showCloud={showCloud}
               showSigns={showSigns}
-              showPulse={!isBroken}
+              showPulse={isSimulating && !isBroken}
             />
           )}
         </MolecularCanvas>

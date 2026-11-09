@@ -26,6 +26,7 @@ export const ExamplesCatalogLab: React.FC = () => {
 
   const currentExample = ALL_EXAMPLES.find((ex) => ex.id === selectedExampleId) || ALL_EXAMPLES[0];
   const activeStructure = activeIsomer === 'A' ? currentExample.isomerA.structure : currentExample.isomerB.structure;
+  const hasNitrogen = activeStructure.atoms.some((atom) => atom.element === 'N');
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -203,7 +204,7 @@ export const ExamplesCatalogLab: React.FC = () => {
 
           {/* 3D Canvas */}
           <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] overflow-hidden">
-            <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
+            <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={hasNitrogen ? 'always' : 'demand'}>
               <Molecule3DViewer
                 structure={activeStructure}
                 showLabels={true}

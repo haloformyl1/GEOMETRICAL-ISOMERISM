@@ -13,6 +13,7 @@ export const CisTransLab: React.FC = () => {
 
   const currentPair = CIS_TRANS_EXAMPLES[selectedIndex];
   const activeStructure = activeIsomer === 'A' ? currentPair.isomerA.structure : currentPair.isomerB.structure;
+  const hasNitrogen = activeStructure.atoms.some((atom) => atom.element === 'N');
 
   return (
     <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
@@ -96,7 +97,7 @@ export const CisTransLab: React.FC = () => {
 
       {/* Main 3D Canvas Area */}
       <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[560px] overflow-hidden">
-        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
+        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={hasNitrogen ? 'always' : 'demand'}>
           <Molecule3DViewer
             structure={activeStructure}
             showLabels={true}

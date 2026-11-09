@@ -31,11 +31,31 @@ export const PiOverlapVisualizer: React.FC<PiOverlapVisualizerProps> = ({
   const [pulseTime, setPulseTime] = useState(0);
   const [flickerTick, setFlickerTick] = useState(0);
   const frameCountRef = useRef(0);
+  const pulseTimeRef = useRef(0);
+  const pulseTopRef = useRef<THREE.Mesh>(null);
+  const pulseBotRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
+    pulseTimeRef.current = (pulseTimeRef.current + delta * 1.4) % 1;
+
+    const pulseTime = pulseTimeRef.current;
+    const pulseX = -1 + pulseTime * 2;
+    pulseTopRef.current?.position.set(
+      pulseX,
+      0.85 + (0.85 * cosVal - 0.85) * pulseTime,
+      0.85 * sinVal * pulseTime
+    );
+    pulseBotRef.current?.position.set(
+      pulseX,
+      -0.85 + (-0.85 * cosVal + 0.85) * pulseTime,
+      -0.85 * sinVal * pulseTime
+    );
+
     frameCountRef.current += 1;
-    setPulseTime((prev) => (prev + delta * 1.4) % 1.0);
-    if (frameCountRef.current % 4 === 0) {
+    if (isStrained && frameCountRef.current % 3 === 0) {
+      setPulseTime(pulseTime);
+    }
+    if (isBroken && frameCountRef.current % 4 === 0) {
       setFlickerTick((prev) => prev + 1);
     }
   });
@@ -191,23 +211,6 @@ export const PiOverlapVisualizer: React.FC<PiOverlapVisualizerProps> = ({
     () => createLineSegments(botFringeUpperC1, botFringeUpperC2, -1),
     [botFringeUpperC1, botFringeUpperC2, isBroken, isStrained, pulseTime]
   );
-
-  // Pulse particles position along intact center lines
-  const pulsePosTop = useMemo(() => {
-    return [
-      topC1[0] * (1 - pulseTime) + topC2[0] * pulseTime,
-      topC1[1] * (1 - pulseTime) + topC2[1] * pulseTime,
-      topC1[2] * (1 - pulseTime) + topC2[2] * pulseTime,
-    ] as [number, number, number];
-  }, [topC1, topC2, pulseTime]);
-
-  const pulsePosBot = useMemo(() => {
-    return [
-      botC1[0] * (1 - pulseTime) + botC2[0] * pulseTime,
-      botC1[1] * (1 - pulseTime) + botC2[1] * pulseTime,
-      botC1[2] * (1 - pulseTime) + botC2[2] * pulseTime,
-    ] as [number, number, number];
-  }, [botC1, botC2, pulseTime]);
 
   // Cylinder bridge orientation & position
   const topMid = useMemo<[number, number, number]>(
@@ -435,7 +438,7 @@ export const PiOverlapVisualizer: React.FC<PiOverlapVisualizerProps> = ({
       {/* 4. SHARED ELECTRON PULSES (gliding along intact lines) */}
       {showPulse && !isBroken && (
         <group name="electron-density-pulses">
-          <Sphere position={pulsePosTop} args={[0.07, 16, 16]}>
+          <Sphere ref={pulseTopRef} position={topC1} args={[0.07, 16, 16]}>
             <meshStandardMaterial
               color="#a5f3fc"
               emissive="#22d3ee"
@@ -443,7 +446,7 @@ export const PiOverlapVisualizer: React.FC<PiOverlapVisualizerProps> = ({
               roughness={0.1}
             />
           </Sphere>
-          <Sphere position={pulsePosBot} args={[0.07, 16, 16]}>
+          <Sphere ref={pulseBotRef} position={botC1} args={[0.07, 16, 16]}>
             <meshStandardMaterial
               color="#7dd3fc"
               emissive="#0284c7"

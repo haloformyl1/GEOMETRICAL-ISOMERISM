@@ -18,6 +18,7 @@ export const SynAntiLab: React.FC = () => {
 
   const currentPair = SYN_ANTI_EXAMPLES[selectedIndex];
   const activeStructure = activeIsomer === 'A' ? currentPair.isomerA.structure : currentPair.isomerB.structure;
+  const hasNitrogen = activeStructure.atoms.some((atom) => atom.element === 'N');
   const isAzo = currentPair.systemType === 'azo';
   const isOxime = currentPair.systemType === 'oxime';
 
@@ -179,7 +180,7 @@ export const SynAntiLab: React.FC = () => {
 
       {/* 3D Canvas */}
       <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
-        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
+        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={hasNitrogen ? 'always' : 'demand'}>
           <Molecule3DViewer
             structure={activeStructure}
             showLabels={true}
