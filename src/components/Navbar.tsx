@@ -105,7 +105,7 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Right Action Tools: Language, Accessibility, Fullscreen, Menu */}
-          <div className="relative flex items-center gap-1.5 sm:gap-2">
+          <div className="relative flex items-center gap-1 sm:gap-2 shrink-0">
             <LanguageSelector compact />
 
             {/* Accessibility dropdown */}
@@ -181,7 +181,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[var(--header-height-mobile)] z-50 flex flex-col bg-[#06101d]/95 p-6 backdrop-blur-2xl lg:hidden animate-fade-in-up">
+        <div className="fixed inset-0 top-[var(--header-height-mobile)] z-50 flex flex-col bg-[#06101d]/95 p-4 sm:p-6 backdrop-blur-2xl lg:hidden animate-fade-in-up overflow-y-auto">
           <div className="flex flex-col gap-2">
             {navLinks.map((link) => {
               const active = location.pathname.startsWith(link.path);

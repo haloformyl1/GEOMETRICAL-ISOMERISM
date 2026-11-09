@@ -74,7 +74,7 @@ export const Learn: React.FC = () => {
                     navigate(`/learn/${module.id}`);
                   }
                 }}
-                className={`group relative flex min-h-[310px] flex-col overflow-hidden rounded-3xl border bg-[#07192be8] p-7 shadow-xl transition-all duration-200 hover:-translate-y-1.5 hover:shadow-2xl cursor-pointer ${
+                className={`group relative flex min-h-[280px] sm:min-h-[310px] flex-col overflow-hidden rounded-2xl sm:rounded-3xl border bg-[#07192be8] p-5 sm:p-7 shadow-xl transition-all duration-200 hover:-translate-y-1.5 hover:shadow-2xl cursor-pointer ${
                   completed
                     ? 'border-emerald-500/40'
                     : inProgress

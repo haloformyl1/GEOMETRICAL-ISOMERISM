@@ -16,55 +16,58 @@ export const PhysicalPropertiesLab: React.FC = () => {
   return (
     <div className="flex flex-col flex-1 h-full w-full min-h-0 relative overflow-hidden">
       {/* Top Tabs */}
-      <div className="flex-shrink-0 z-20 flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-3.5 backdrop-blur-md">
-        <div className="flex items-center gap-1.5 flex-wrap">
+      <div className="flex-shrink-0 z-20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-2.5 sm:p-3.5 backdrop-blur-md">
+        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <button
             type="button"
             onClick={() => setActiveTab('dehydration')}
-            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+            className={`flex items-center gap-1.5 rounded-xl px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 shrink-0 ${
               activeTab === 'dehydration'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                 : 'bg-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            <Flame className="h-3.5 w-3.5 text-amber-300" />
-            <span><BilingualText en="Maleic vs Fumaric Dehydration" bn="ম্যালিক বনাম ফিউমারিক পানিশূন্যকরণ" /></span>
+            <Flame className="h-3.5 w-3.5 text-amber-300 shrink-0" />
+            <span className="sm:hidden">Dehydration</span>
+            <span className="hidden sm:inline"><BilingualText en="Maleic vs Fumaric Dehydration" bn="ম্যালিক বনাম ফিউমারিক পানিশূন্যকরণ" /></span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('dipole')}
-            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+            className={`flex items-center gap-1.5 rounded-xl px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 shrink-0 ${
               activeTab === 'dipole'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                 : 'bg-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            <Droplets className="h-3.5 w-3.5 text-sky-300" />
-            <span><BilingualText en="Dipole Vector Summation" bn="ডাইপোল ভেক্টর যোগফল" /></span>
+            <Droplets className="h-3.5 w-3.5 text-sky-300 shrink-0" />
+            <span className="sm:hidden">Dipole</span>
+            <span className="hidden sm:inline"><BilingualText en="Dipole Vector Summation" bn="ডাইপোল ভেক্টর যোগফল" /></span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('packing')}
-            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+            className={`flex items-center gap-1.5 rounded-xl px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 shrink-0 ${
               activeTab === 'packing'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                 : 'bg-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            <Grid className="h-3.5 w-3.5 text-emerald-300" />
-            <span><BilingualText en="Crystal Packing & Melting Point" bn="স্ফটিক প্যাকিং ও গলনাঙ্ক" /></span>
+            <Grid className="h-3.5 w-3.5 text-emerald-300 shrink-0" />
+            <span className="sm:hidden">Packing</span>
+            <span className="hidden sm:inline"><BilingualText en="Crystal Packing & Melting Point" bn="স্ফটিক প্যাকিং ও গলনাঙ্ক" /></span>
           </button>
         </div>
 
         {/* Sub-controls depending on active tab */}
         {activeTab === 'dehydration' && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => { setIsMaleic(true); setTemperature(25); }}
-              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 isMaleic ? 'bg-cyan-500 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]' : 'bg-slate-800 text-slate-400'
               }`}
             >
@@ -73,7 +76,7 @@ export const PhysicalPropertiesLab: React.FC = () => {
             <button
               type="button"
               onClick={() => { setIsMaleic(false); setTemperature(25); }}
-              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 !isMaleic ? 'bg-cyan-500 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]' : 'bg-slate-800 text-slate-400'
               }`}
             >
@@ -83,11 +86,11 @@ export const PhysicalPropertiesLab: React.FC = () => {
         )}
 
         {activeTab === 'dipole' && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setDipoleIsomer('cis')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 dipoleIsomer === 'cis' ? 'bg-amber-500 text-white shadow-[0_0_12px_rgba(245,158,11,0.4)]' : 'bg-slate-800 text-slate-400'
               }`}
             >
@@ -96,7 +99,7 @@ export const PhysicalPropertiesLab: React.FC = () => {
             <button
               type="button"
               onClick={() => setDipoleIsomer('trans')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 dipoleIsomer === 'trans' ? 'bg-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' : 'bg-slate-800 text-slate-400'
               }`}
             >
@@ -107,7 +110,7 @@ export const PhysicalPropertiesLab: React.FC = () => {
       </div>
 
       {/* Main Interactive Stage: Expands 100% into the parent box */}
-      <div className="relative flex-1 w-full h-full min-h-[480px] md:min-h-[540px] lg:min-h-[600px] overflow-hidden">
+      <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
         {/* TAB 1: MALEIC VS FUMARIC DEHYDRATION */}
         {activeTab === 'dehydration' && (
           <>
@@ -160,7 +163,7 @@ export const PhysicalPropertiesLab: React.FC = () => {
             </MolecularCanvas>
 
             {/* Temperature Controller Bar for Dehydration (Floats at bottom) */}
-            <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-3 rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-4 backdrop-blur-md shadow-2xl">
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 z-20 pointer-events-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 rounded-xl sm:rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-3 sm:p-4 backdrop-blur-md shadow-2xl">
               <div className="w-full sm:w-1/2">
                 <div className="flex justify-between text-xs font-bold text-slate-300 mb-1">
                   <span><BilingualText en="Temperature Controller:" bn="তাপমাত্রা নিয়ন্ত্রক:" /></span>
@@ -174,22 +177,22 @@ export const PhysicalPropertiesLab: React.FC = () => {
                   onChange={(e) => setTemperature(Number(e.target.value))}
                   className="w-full accent-cyan-400 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                <div className="flex justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono mt-1">
                   <span>25°C (Room)</span>
-                  <span className="text-amber-400 font-bold">140°C (Maleic Threshold)</span>
-                  <span>200°C (Fumaric Threshold)</span>
+                  <span className="text-amber-400 font-bold">140°C (Maleic)</span>
+                  <span>200°C (Fumaric)</span>
                 </div>
               </div>
 
-              <div className="text-right text-xs">
-                <span className={`font-bold ${isDehydrated ? 'text-amber-300' : 'text-slate-300'}`}>
+              <div className="text-left sm:text-right text-xs border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-700/80">
+                <span className={`font-bold block ${isDehydrated ? 'text-amber-300' : 'text-slate-300'}`}>
                   {isMaleic
                     ? isDehydrated
                       ? '⚡ Dehydration Occurred! (Maleic Anhydride + H₂O)'
                       : 'Maleic Acid (Cis)'
                     : 'Fumaric Acid (Trans)'}
                 </span>
-                <p className="text-[11px] text-slate-400 mt-0.5 max-w-xs">
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 max-w-xs leading-relaxed">
                   {isMaleic
                     ? isDehydrated
                       ? 'Both -COOH groups were adjacent (2.4 Å), readily yielding cyclic anhydride!'
@@ -259,21 +262,21 @@ export const PhysicalPropertiesLab: React.FC = () => {
             </MolecularCanvas>
 
             {/* Bottom Dipole Analysis Card */}
-            <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-auto rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-4 backdrop-blur-md shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-300">
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 z-20 pointer-events-auto rounded-xl sm:rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-3 sm:p-4 backdrop-blur-md shadow-2xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 text-xs text-slate-300">
                 <div>
-                  <p className="font-bold text-amber-300 text-sm">
+                  <p className="font-bold text-amber-300 text-xs sm:text-sm">
                     {dipoleIsomer === 'cis' ? 'Cis-1,2-Dichloroethene (Polar, μ = 1.90 D)' : 'Trans-1,2-Dichloroethene (Non-Polar, μ = 0.00 D)'}
                   </p>
-                  <p className="text-slate-400 mt-1 max-w-xl leading-relaxed">
+                  <p className="text-slate-400 mt-1 max-w-xl leading-relaxed text-[11px] sm:text-xs">
                     {dipoleIsomer === 'cis'
                       ? 'Both C-Cl bond dipoles point along +Y. Vector addition gives a net dipole of 1.90 D, causing strong dipole-dipole forces and a higher boiling point (60.3°C).'
                       : 'The two C-Cl dipoles point exactly 180° opposite to each other. They cancel out completely, yielding μ = 0.00 D and a lower boiling point (47.5°C).'}
                   </p>
                 </div>
-                <div className="font-mono text-right shrink-0">
-                  <p className="text-[10px] text-slate-500 uppercase">Boiling Point</p>
-                  <p className="font-bold text-cyan-300 text-sm">{dipoleIsomer === 'cis' ? '60.3°C' : '47.5°C'}</p>
+                <div className="font-mono flex items-center justify-between sm:block sm:text-right shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-700/80 w-full sm:w-auto">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Boiling Point</p>
+                  <p className="font-bold text-cyan-300 text-xs sm:text-sm">{dipoleIsomer === 'cis' ? '60.3°C' : '47.5°C'}</p>
                 </div>
               </div>
             </div>
@@ -325,19 +328,19 @@ export const PhysicalPropertiesLab: React.FC = () => {
             </MolecularCanvas>
 
             {/* Bottom Packing Analysis Card */}
-            <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-auto rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-4 backdrop-blur-md shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-300">
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 z-20 pointer-events-auto rounded-xl sm:rounded-2xl border border-cyan-500/30 bg-[#07192bf0] p-3 sm:p-4 backdrop-blur-md shadow-2xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 text-xs text-slate-300">
                 <div>
-                  <p className="font-bold text-emerald-300 text-sm">
+                  <p className="font-bold text-emerald-300 text-xs sm:text-sm">
                     Crystal Packing Symmetry vs Melting Point
                   </p>
-                  <p className="text-slate-400 mt-1 max-w-xl leading-relaxed">
+                  <p className="text-slate-400 mt-1 max-w-xl leading-relaxed text-[11px] sm:text-xs">
                     Trans isomers possess a center of symmetry and linear rod-like shape, permitting efficient crystal lattice packing and higher melting point (Fumaric acid melts at 287°C vs Maleic acid at 130°C).
                   </p>
                 </div>
-                <div className="font-mono text-right shrink-0">
-                  <p className="text-[10px] text-slate-500 uppercase">Δ Melting Point</p>
-                  <p className="font-bold text-emerald-300 text-sm">+157°C (Trans Higher)</p>
+                <div className="font-mono flex items-center justify-between sm:block sm:text-right shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-700/80 w-full sm:w-auto">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Δ Melting Point</p>
+                  <p className="font-bold text-emerald-300 text-xs sm:text-sm">+157°C (Trans Higher)</p>
                 </div>
               </div>
             </div>

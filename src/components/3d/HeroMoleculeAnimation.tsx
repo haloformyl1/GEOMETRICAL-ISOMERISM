@@ -521,12 +521,12 @@ export const HeroMoleculeAnimation: React.FC = () => {
       </Canvas>
 
       {/* ────────────────── TOP-RIGHT INTERACTIVE CONTROLS ────────────────── */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex flex-wrap items-center justify-end gap-2">
+      <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-10 flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
         {/* Toggle Orbitals */}
         <button
           type="button"
           onClick={() => setShowOrbitals(!showOrbitals)}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
+          className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
             showOrbitals
               ? 'border-cyan-400 bg-cyan-500/25 text-white shadow-[0_0_16px_rgba(6,182,212,0.4)]'
               : 'border-[rgba(165,214,255,0.18)] bg-[#07192b]/80 text-[#a9bfd2] hover:bg-cyan-500/15 hover:text-cyan-200'
@@ -541,7 +541,7 @@ export const HeroMoleculeAnimation: React.FC = () => {
         <button
           type="button"
           onClick={() => setShowDipole(!showDipole)}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
+          className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
             showDipole
               ? 'border-amber-400 bg-amber-500/25 text-white shadow-[0_0_16px_rgba(245,158,11,0.4)]'
               : 'border-[rgba(165,214,255,0.18)] bg-[#07192b]/80 text-[#a9bfd2] hover:bg-amber-500/15 hover:text-amber-200'
@@ -556,15 +556,16 @@ export const HeroMoleculeAnimation: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsCis(!isCis)}
-          className="flex items-center gap-2 rounded-xl border border-cyan-400/40 bg-[#06182c]/85 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-cyan-300 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:bg-cyan-500/25 hover:text-white transition-all cursor-pointer"
+          className="flex items-center gap-1.5 sm:gap-2 rounded-xl border border-cyan-400/40 bg-[#06182c]/85 px-3 py-1 sm:px-4 sm:py-2 text-xs font-bold text-cyan-300 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:bg-cyan-500/25 hover:text-white transition-all cursor-pointer"
         >
           <RefreshCw className="h-3.5 w-3.5 text-cyan-300 animate-spin-slow" />
-          <span>{isCis ? 'Switch to Trans-Isomer' : 'Switch to Cis-Isomer'}</span>
+          <span className="hidden sm:inline">{isCis ? 'Switch to Trans-Isomer' : 'Switch to Cis-Isomer'}</span>
+          <span className="sm:hidden">{isCis ? 'To Trans' : 'To Cis'}</span>
         </button>
       </div>
 
       {/* ────────────────── BOTTOM FLOATING INFO CARD ────────────────── */}
-      <div className="pointer-events-none absolute inset-x-3 bottom-3 sm:inset-x-5 sm:bottom-5 rounded-2xl border border-[rgba(165,214,255,0.18)] bg-[#07192b]/90 p-3.5 sm:p-4 text-xs backdrop-blur-md shadow-[0_16px_36px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="pointer-events-none absolute inset-x-2 bottom-2 sm:inset-x-4 sm:bottom-4 rounded-2xl border border-[rgba(165,214,255,0.18)] bg-[#07192b]/92 p-2.5 sm:p-4 text-xs backdrop-blur-md shadow-[0_16px_36px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span
@@ -574,14 +575,14 @@ export const HeroMoleculeAnimation: React.FC = () => {
                   : 'bg-purple-400 shadow-[0_0_8px_#c084fc]'
               }`}
             />
-            <p className="font-extrabold text-[#edf8ff] text-sm tracking-tight">
+            <p className="font-extrabold text-[#edf8ff] text-xs sm:text-sm tracking-tight">
               {isCis ? 'Cis-But-2-ene (Z-Isomer)' : 'Trans-But-2-ene (E-Isomer)'}
             </p>
-            <span className="rounded bg-cyan-950/80 px-1.5 py-0.5 text-[10px] font-mono font-bold uppercase text-cyan-300 border border-cyan-500/30">
+            <span className="rounded bg-cyan-950/80 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase text-cyan-300 border border-cyan-500/30">
               {isCis ? 'Z-Alkene' : 'E-Alkene'}
             </span>
           </div>
-          <div className="text-[11px] leading-relaxed text-[#c5d8e4] max-w-[50ch]">
+          <div className="text-[10px] sm:text-[11px] leading-relaxed text-[#c5d8e4] max-w-[50ch] line-clamp-2 sm:line-clamp-none">
             {isCis ? (
               <BilingualText
                 en="Bulky methyl groups (-CH₃) lie on the same side of the C=C double bond, generating a net dipole moment and higher boiling point."
@@ -597,12 +598,12 @@ export const HeroMoleculeAnimation: React.FC = () => {
         </div>
 
         {/* Key Chemical Metrics Badge */}
-        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-[rgba(165,214,255,0.15)] pt-2 sm:pt-0 sm:pl-4 font-mono text-[11px]">
-          <div className="text-left sm:text-right">
+        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-[rgba(165,214,255,0.15)] pt-1.5 sm:pt-0 sm:pl-4 font-mono text-[10px] sm:text-[11px] w-full sm:w-auto justify-between sm:justify-end">
+          <div className="text-left sm:text-right flex sm:flex-col gap-3 sm:gap-0">
             <p className="text-[#a9bfd2]">
               Dipole:{' '}
               <span className={`font-bold ${isCis ? 'text-amber-300' : 'text-slate-400'}`}>
-                {isCis ? 'μ = 0.33 D' : 'μ = 0.00 D'}
+                {isCis ? '0.33 D' : '0.00 D'}
               </span>
             </p>
             <p className="text-[#a9bfd2]">

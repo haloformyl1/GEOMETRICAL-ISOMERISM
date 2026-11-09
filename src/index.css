@@ -142,14 +142,14 @@
     width: 100%;
     max-width: var(--page-max);
     margin-inline: auto;
-    padding: clamp(28px, 4vw, 64px) clamp(16px, 3.2vw, 56px);
+    padding: clamp(20px, 3.5vw, 64px) clamp(12px, 3vw, 56px);
   }
 
   .page-shell-compact {
     width: 100%;
     max-width: 1180px;
     margin-inline: auto;
-    padding: clamp(28px, 4vw, 56px) clamp(16px, 3vw, 40px);
+    padding: clamp(20px, 3.5vw, 56px) clamp(12px, 2.8vw, 40px);
   }
 
   .reading-column {
@@ -323,7 +323,7 @@
   .lab-frame {
     position: relative;
     display: flex;
-    min-height: clamp(520px, 72vh, 860px);
+    min-height: clamp(380px, 68vh, 860px);
     flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--border-strong);
@@ -441,8 +441,8 @@
 
   .bilingual-layout {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(12px, 2vw, 24px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(10px, 2vw, 24px);
   }
 
   .bilingual-pane + .bilingual-pane {
@@ -492,23 +492,27 @@
   .katex { color: var(--text-primary); font-size: 1.12em; }
 
   @media (max-width: 767px) {
-    .page-shell, .page-shell-compact { padding-inline: 16px; }
-    .bilingual-layout { grid-template-columns: minmax(0, 1fr); }
-    .bilingual-pane + .bilingual-pane { border-top: 1px solid var(--border-default); border-left: 0; padding-top: 12px; padding-left: 0; }
-    .lab-frame { min-height: 420px; border-radius: var(--radius-lg); }
+    .page-shell, .page-shell-compact { padding-inline: 14px; padding-top: 20px; padding-bottom: 24px; }
+    .bilingual-pane + .bilingual-pane { border-top: 1px solid var(--border-default); border-left: 0; padding-top: 10px; padding-left: 0; }
+    .lab-frame { min-height: 380px; border-radius: var(--radius-lg); }
     .lab-section::after { left: -8px; opacity: 0.2; }
-    .lab-frame-toolbar { align-items: flex-start; }
-    .lab-frame-toolbar-title { max-width: 58vw; }
+    .lab-frame-toolbar { align-items: center; min-height: 50px; padding: 6px 8px 6px 12px; }
+    .lab-frame-toolbar-title { max-width: 60vw; }
     .btn { padding-inline: 14px; }
   }
 
   @media (max-width: 480px) {
-    .page-shell, .page-shell-compact { padding-inline: 12px; }
-    .lab-frame { min-height: 360px; }
-    .lab-frame-toolbar { min-height: 52px; padding: 10px 8px 10px 12px; }
-    .lab-frame-toolbar-title { max-width: 62vw; }
-    .btn { min-height: 42px; padding: 9px 12px; font-size: 0.94rem; }
-    .page-shell { padding-top: 22px; padding-bottom: 22px; }
+    .page-shell, .page-shell-compact { padding-inline: 10px; padding-top: 16px; padding-bottom: 20px; }
+    .lab-frame { min-height: 340px; }
+    .lab-frame-toolbar { min-height: 46px; padding: 6px 8px; }
+    .lab-frame-toolbar-title { max-width: 55vw; }
+    .btn { min-height: 40px; padding: 8px 12px; font-size: 0.88rem; }
+  }
+
+  @media (max-width: 360px) {
+    .page-shell, .page-shell-compact { padding-inline: 8px; }
+    .lab-frame { min-height: 310px; }
+    .btn { font-size: 0.82rem; padding: 7px 10px; }
   }
 
   @media (min-width: 1024px) {

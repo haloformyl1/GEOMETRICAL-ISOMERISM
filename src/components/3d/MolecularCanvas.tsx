@@ -1,4 +1,6 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
+import { useThree } from '@react-three/fiber';
+import * as THREE from 'three';
 import { Environment, Grid, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { ErrorState } from '../ui/States';
 import { AppCanvas as Canvas } from '../ui/AppCanvas';
@@ -10,6 +12,51 @@ interface MolecularCanvasProps {
   resetKey?: number;
   ariaLabel?: string;
 }
+
+const ResponsiveCameraRig: React.FC<{
+  position: [number, number, number];
+  target: [number, number, number];
+  resetKey: number;
+}> = ({ position, target, resetKey }) => {
+  const { camera, size, invalidate } = useThree();
+
+  useEffect(() => {
+    const isNarrow = size.width < 540;
+    const isTall = size.height > size.width;
+    const targetFov = isNarrow || isTall ? 52 : 46;
+
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.fov = targetFov;
+      camera.updateProjectionMatrix();
+      invalidate();
+    }
+  }, [camera, invalidate, size.height, size.width]);
+
+  return (
+    <>
+      <PerspectiveCamera
+        key={`camera-${resetKey}`}
+        makeDefault
+        position={position}
+        fov={46}
+        near={0.1}
+        far={100}
+      />
+      <OrbitControls
+        key={`controls-${resetKey}`}
+        enableDamping
+        dampingFactor={0.08}
+        enablePan
+        enableRotate
+        enableZoom
+        target={target}
+        maxDistance={14}
+        minDistance={1.8}
+        makeDefault
+      />
+    </>
+  );
+};
 
 export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
   children,
@@ -49,25 +96,10 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
         gl={{ antialias: true, powerPreference: 'high-performance' }}
       >
         <color attach="background" args={['#06131d']} />
-        <PerspectiveCamera
-          key={`camera-${resetKey}`}
-          makeDefault
+        <ResponsiveCameraRig
           position={cameraPosition}
-          fov={46}
-          near={0.1}
-          far={100}
-        />
-        <OrbitControls
-          key={`controls-${resetKey}`}
-          enableDamping
-          dampingFactor={0.08}
-          enablePan
-          enableRotate
-          enableZoom
           target={cameraTarget}
-          maxDistance={14}
-          minDistance={1.8}
-          makeDefault
+          resetKey={resetKey}
         />
 
         <ambientLight intensity={0.7} />

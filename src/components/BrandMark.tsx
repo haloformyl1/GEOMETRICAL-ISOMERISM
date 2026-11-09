@@ -154,8 +154,8 @@ export const BrandMark: React.FC<BrandMarkProps> = ({
             <span
               className={`tracking-[0.14em] text-cyan-300/80 font-bold uppercase ${
                 compact
-                  ? 'text-[7px] sm:text-[9px] mt-0.5 sm:tracking-[0.18em]'
-                  : 'text-[9px] sm:text-[12px] mt-1 sm:tracking-[0.22em]'
+                  ? 'hidden min-[380px]:inline-block text-[7px] sm:text-[9px] mt-0.5 sm:tracking-[0.18em]'
+                  : 'text-[8px] sm:text-[12px] mt-1 sm:tracking-[0.22em]'
               } sm:whitespace-nowrap whitespace-normal`}
             >
               {displaySubtitle}

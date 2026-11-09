@@ -44,7 +44,7 @@ export const ModuleView: React.FC = () => {
               <ArrowLeft className="w-3.5 h-3.5" />
               <BilingualText en="Back to Modules" bn="অধ্যায়সমূহে ফিরে যান" />
             </button>
-            <h1 className="text-2xl font-black text-white md:text-3xl">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white break-words">
               <BilingualText en={moduleData.title.en} bn={moduleData.title.bn} />
             </h1>
           </div>
@@ -158,22 +158,24 @@ export const ModuleView: React.FC = () => {
         </div>
 
         {/* Bottom Module Complete Action */}
-        <div className="reading-column mt-16 flex justify-start border-t border-slate-800 pt-10 pb-12">
+        <div className="reading-column mt-12 sm:mt-16 flex justify-start border-t border-slate-800 pt-8 sm:pt-10 pb-12">
           <button
             type="button"
             onClick={handleComplete}
             disabled={isCompleted}
-            className={`btn px-8 py-4 text-base font-bold cursor-pointer flex items-center gap-3 ${
+            className={`btn w-full sm:w-auto px-5 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold cursor-pointer flex items-center justify-center gap-2.5 sm:gap-3 ${
               isCompleted
                 ? 'border-emerald-500/30 bg-emerald-950/40 text-emerald-300'
                 : 'btn-primary'
             }`}
           >
-            <CheckCircle className="h-5 w-5" />
-            <BilingualText
-              en={isCompleted ? 'Module Completed! Revisit anytime' : 'Mark Module as Complete & Save Progress'}
-              bn={isCompleted ? 'অধ্যায় সম্পূর্ণ হয়েছে! যেকোনো সময় পুনরাবৃত্তি করুন' : 'অধ্যায় সম্পন্ন চিহ্নিত করুন এবং অগ্রগতি সংরক্ষণ করুন'}
-            />
+            <CheckCircle className="h-5 w-5 shrink-0" />
+            <span>
+              <BilingualText
+                en={isCompleted ? 'Module Completed! Revisit anytime' : 'Mark Module as Complete & Save Progress'}
+                bn={isCompleted ? 'অধ্যায় সম্পূর্ণ হয়েছে! যেকোনো সময় পুনরাবৃত্তি করুন' : 'অধ্যায় সম্পন্ন চিহ্নিত করুন এবং অগ্রগতি সংরক্ষণ করুন'}
+              />
+            </span>
           </button>
         </div>
       </div>

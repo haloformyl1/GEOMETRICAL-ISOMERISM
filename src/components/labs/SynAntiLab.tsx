@@ -42,16 +42,16 @@ export const SynAntiLab: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-4 backdrop-blur-md">
-        <div className="flex items-center gap-2">
-          <label htmlFor="sa-select" className="text-xs font-bold text-slate-300">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-3 sm:p-4 backdrop-blur-md">
+        <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-1.5 sm:gap-2">
+          <label htmlFor="sa-select" className="text-xs font-bold text-slate-300 shrink-0">
             <BilingualText en="Select System:" bn="সিস্টেম নির্বাচন করুন:" />
           </label>
           <select
             id="sa-select"
             value={selectedIndex}
             onChange={(e) => setSelectedIndex(Number(e.target.value))}
-            className="rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
+            className="w-full sm:w-auto max-w-full rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
           >
             {SYN_ANTI_EXAMPLES.map((ex, idx) => (
               <option key={ex.id} value={idx}>
@@ -62,12 +62,12 @@ export const SynAntiLab: React.FC = () => {
         </div>
 
         {/* Isomer Switcher & Photo-Switch button */}
-        <div className="flex items-center gap-2">
-          <div className="flex rounded-xl border border-cyan-500/30 bg-slate-900/80 p-0.5">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-1 sm:flex-initial rounded-xl border border-cyan-500/30 bg-slate-900/80 p-0.5">
             <button
               type="button"
               onClick={() => setActiveIsomer('A')}
-              className={`rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 activeIsomer === 'A'
                   ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-[0_0_12px_rgba(245,158,11,0.4)]'
                   : 'text-slate-400 hover:text-white'
@@ -78,7 +78,7 @@ export const SynAntiLab: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveIsomer('B')}
-              className={`rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 ${
+              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 activeIsomer === 'B'
                   ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-[0_0_12px_rgba(14,165,233,0.4)]'
                   : 'text-slate-400 hover:text-white'
@@ -92,7 +92,7 @@ export const SynAntiLab: React.FC = () => {
             <button
               type="button"
               onClick={triggerPhotochemicalSwitch}
-              className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl border px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                 lightMode === 'uv'
                   ? 'border-purple-400 bg-purple-600 text-white animate-pulse'
                   : lightMode === 'vis'
@@ -100,9 +100,9 @@ export const SynAntiLab: React.FC = () => {
                   : 'border-cyan-500/40 bg-cyan-950/70 text-cyan-300 hover:bg-cyan-800/80 hover:text-white'
               }`}
             >
-              <Zap className="h-3.5 w-3.5 text-yellow-300" />
-              <span>
-                {activeIsomer === 'B' ? 'Irradiate with UV (365 nm)' : 'Irradiate with Blue (450 nm)'}
+              <Zap className="h-3.5 w-3.5 text-yellow-300 shrink-0" />
+              <span className="truncate">
+                {activeIsomer === 'B' ? 'Irradiate UV (365 nm)' : 'Irradiate Blue (450 nm)'}
               </span>
             </button>
           )}
@@ -110,11 +110,11 @@ export const SynAntiLab: React.FC = () => {
       </div>
 
       {/* LONE PAIR INTERACTIVE TOOLBAR */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-[#061423] px-5 py-2 border-b border-[rgba(70,227,255,0.08)] text-[11px] text-slate-400">
-        <div className="flex items-center gap-4 flex-wrap">
-          <span className="font-bold text-amber-300 flex items-center gap-1">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 bg-[#061423] px-3 sm:px-5 py-2 border-b border-[rgba(70,227,255,0.08)] text-[10px] sm:text-[11px] text-slate-400">
+        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+          <span className="font-bold text-amber-300 flex items-center gap-1 shrink-0">
             <Sparkles className="h-3 w-3" />
-            <BilingualText en="Nitrogen Lone Pair (:) Controls:" bn="নাইট্রোজেন লোন পেয়ার (:) নিয়ন্ত্রণ:" />
+            <BilingualText en="N Lone Pair (:) Controls:" bn="N লোন পেয়ার (:) নিয়ন্ত্রণ:" />
           </span>
 
           <label className="flex items-center gap-1.5 cursor-pointer hover:text-amber-200 transition-colors">
@@ -125,7 +125,7 @@ export const SynAntiLab: React.FC = () => {
               className="accent-amber-400 rounded cursor-pointer"
             />
             <Eye className="h-3 w-3 text-amber-400" />
-            <span><BilingualText en="Show Lone Pair" bn="লোন পেয়ার দেখান" /></span>
+            <span><BilingualText en="Show Lone Pair" bn="লোন পেয়ার" /></span>
           </label>
 
           {showLonePairs && (
@@ -149,7 +149,7 @@ export const SynAntiLab: React.FC = () => {
                   className="accent-amber-400 rounded cursor-pointer"
                 />
                 <span className="font-bold text-amber-400 font-mono">(:)</span>
-                <span><BilingualText en="Electron Dots" bn="ইলেকট্রন বিন্দু" /></span>
+                <span><BilingualText en="Dots" bn="বিন্দু" /></span>
               </label>
 
               <label className="flex items-center gap-1.5 cursor-pointer hover:text-amber-200 transition-colors">
@@ -160,14 +160,14 @@ export const SynAntiLab: React.FC = () => {
                   className="accent-amber-400 rounded cursor-pointer"
                 />
                 <Tag className="h-3 w-3 text-amber-400" />
-                <span><BilingualText en="3D Label" bn="৩D লেবেল" /></span>
+                <span><BilingualText en="Label" bn="লেবেল" /></span>
               </label>
             </>
           )}
         </div>
 
         {/* Steric Hybridization Pill */}
-        <div className="flex items-center gap-2 text-[10px] font-mono text-cyan-300">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] font-mono text-cyan-300">
           <span className="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30">
             N Hybridization: sp² (120°)
           </span>
@@ -178,7 +178,7 @@ export const SynAntiLab: React.FC = () => {
       </div>
 
       {/* 3D Canvas */}
-      <div className="relative flex-1 w-full h-full min-h-[480px] md:min-h-[540px] lg:min-h-[600px] overflow-hidden">
+      <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
         <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
           <Molecule3DViewer
             structure={activeStructure}
@@ -193,17 +193,17 @@ export const SynAntiLab: React.FC = () => {
         </MolecularCanvas>
 
         {/* Floating Lone Pair Stereochemistry Inspector Pill */}
-        <div className="pointer-events-none absolute top-4 left-4 z-10 flex flex-col gap-1.5 rounded-xl border border-amber-500/30 bg-[#061320]/90 p-3 backdrop-blur-md text-xs shadow-xl max-w-sm">
+        <div className="pointer-events-none absolute top-2.5 left-2.5 right-2.5 sm:right-auto sm:top-4 sm:left-4 z-10 flex flex-col gap-1 rounded-xl border border-amber-500/30 bg-[#061320]/90 p-2.5 sm:p-3 backdrop-blur-md text-[11px] sm:text-xs shadow-xl sm:max-w-sm max-h-36 overflow-y-auto">
           <div className="flex items-center gap-1.5 text-amber-300 font-bold">
-            <span className="font-mono text-base">(:)</span>
+            <span className="font-mono text-sm sm:text-base">(:)</span>
             <span>
               <BilingualText
-                en="Stereochemical Role of the Lone Pair:"
-                bn="লোন পেয়ারের স্টেরিওরাসায়নিক ভূমিকা:"
+                en="Role of Lone Pair:"
+                bn="লোন পেয়ারের ভূমিকা:"
               />
             </span>
           </div>
-          <p className="text-[11px] leading-relaxed text-slate-300">
+          <p className="text-[10px] sm:text-[11px] leading-relaxed text-slate-300">
             {isOxime ? (
               activeIsomer === 'A' ? (
                 <BilingualText
@@ -238,33 +238,33 @@ export const SynAntiLab: React.FC = () => {
         </div>
 
         {/* Bottom Details Card */}
-        <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-2xl border border-[rgba(70,227,255,0.2)] bg-[#07192be8] p-4 backdrop-blur-xl shadow-2xl">
-          <div>
+        <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 rounded-xl sm:rounded-2xl border border-[rgba(70,227,255,0.2)] bg-[#07192be8] p-3 sm:p-4 backdrop-blur-xl shadow-2xl">
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-extrabold uppercase ${
+              <span className={`px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-extrabold uppercase shrink-0 ${
                 activeIsomer === 'A'
                   ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                   : 'bg-sky-500/20 text-sky-300 border border-sky-500/40'
               }`}>
                 {activeIsomer === 'A' ? 'Syn Isomer' : 'Anti Isomer'}
               </span>
-              <h3 className="text-base font-extrabold text-white">
+              <h3 className="text-sm sm:text-base font-extrabold text-white truncate">
                 <BilingualText en={activeStructure.name.en} bn={activeStructure.name.bn} />
               </h3>
             </div>
-            <p className="mt-1 text-xs text-slate-300 max-w-xl">
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-300 max-w-xl line-clamp-2 sm:line-clamp-none">
               <BilingualText en={currentPair.pedagogicalNote.en} bn={currentPair.pedagogicalNote.bn} />
             </p>
           </div>
 
-          <div className="flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-slate-700 pt-2 sm:pt-0 sm:pl-4 font-mono text-xs text-slate-300">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-4 border-t sm:border-t-0 sm:border-l border-slate-700/80 pt-2 sm:pt-0 sm:pl-4 font-mono text-xs text-slate-300 w-full sm:w-auto">
             <div>
-              <p className="text-[10px] text-slate-500 uppercase">Dipole (μ)</p>
-              <p className="font-bold text-amber-300">{activeStructure.dipoleNet?.toFixed(2)} D</p>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Dipole (μ)</p>
+              <p className="font-bold text-amber-300 text-xs sm:text-sm">{activeStructure.dipoleNet?.toFixed(2)} D</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-500 uppercase">Melting Point</p>
-              <p className="font-bold text-emerald-300">{activeStructure.meltingPoint || 'N/A'}</p>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Melting Point</p>
+              <p className="font-bold text-emerald-300 text-xs sm:text-sm">{activeStructure.meltingPoint || 'N/A'}</p>
             </div>
           </div>
         </div>

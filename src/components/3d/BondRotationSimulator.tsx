@@ -134,40 +134,40 @@ export const BondRotationSimulator: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top HUD Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 px-5 py-3 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 px-3 sm:px-5 py-2.5 sm:py-3 backdrop-blur-md">
         {/* Molecule Switcher */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => handleModeSwitch('ethene')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border-0 ${
+            className={`flex-1 sm:flex-initial text-center px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border-0 ${
               moleculeType === 'ethene'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                 : 'bg-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            <BilingualText en="Ethene (C=C Double Bond)" bn="ইথিন (C=C দ্বিবন্ধন)" />
+            <BilingualText en="Ethene (C=C Double)" bn="ইথিন (C=C দ্বিবন্ধন)" />
           </button>
           <button
             type="button"
             onClick={() => handleModeSwitch('ethane')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border-0 ${
+            className={`flex-1 sm:flex-initial text-center px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border-0 ${
               moleculeType === 'ethane'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                 : 'bg-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            <BilingualText en="Ethane (C-C Single Bond)" bn="ইথেন (C-C একক বন্ধন)" />
+            <BilingualText en="Ethane (C-C Single)" bn="ইথেন (C-C একক)" />
           </button>
         </div>
 
         {/* Action Controls & Energy Gauge */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
           {moleculeType === 'ethene' && (
             <button
               type="button"
               onClick={handleToggleSimulation}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 isSimulating
                   ? 'border-rose-500 bg-rose-500/20 text-rose-300 animate-pulse'
                   : 'border-cyan-500/40 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20'
@@ -176,22 +176,22 @@ export const BondRotationSimulator: React.FC = () => {
               {isSimulating ? (
                 <>
                   <Square className="h-3.5 w-3.5 fill-current" />
-                  <BilingualText en="Stop Twist Demo" bn="ঘূর্ণন থামান" />
+                  <BilingualText en="Stop Twist" bn="ঘূর্ণন থামান" />
                 </>
               ) : (
                 <>
                   <Play className="h-3.5 w-3.5 fill-current text-cyan-400" />
-                  <BilingualText en="⚡ Attempt Forced Twist" bn="⚡ জোরপূর্বক ঘূর্ণন চেষ্টা" />
+                  <BilingualText en="⚡ Attempt Twist" bn="⚡ ঘূর্ণন চেষ্টা" />
                 </>
               )}
             </button>
           )}
 
           {/* Energy Gauge */}
-          <div className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-1">
-            <Flame className={`h-4 w-4 ${isBroken ? 'text-rose-500 animate-pulse' : isStrained ? 'text-amber-400' : 'text-cyan-400'}`} />
-            <span className="text-xs text-slate-300">
-              <BilingualText en="Barrier Energy:" bn="বাধা শক্তি:" />
+          <div className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 sm:px-3 py-1">
+            <Flame className={`h-4 w-4 shrink-0 ${isBroken ? 'text-rose-500 animate-pulse' : isStrained ? 'text-amber-400' : 'text-cyan-400'}`} />
+            <span className="text-[11px] sm:text-xs text-slate-300">
+              <BilingualText en="Barrier:" bn="বাধা:" />
             </span>
             <span className={`font-mono text-xs font-bold ${isBroken ? 'text-rose-400' : isStrained ? 'text-amber-300' : 'text-cyan-300'}`}>
               {currentEnergy} kJ/mol
@@ -205,7 +205,7 @@ export const BondRotationSimulator: React.FC = () => {
               setIsSimulating(false);
               setAngle(0);
             }}
-            className="grid h-8 w-8 place-items-center rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white cursor-pointer"
+            className="grid h-8 w-8 place-items-center rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white cursor-pointer shrink-0"
             title="Reset angle to 0°"
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -215,8 +215,8 @@ export const BondRotationSimulator: React.FC = () => {
 
       {/* Visualizer Feature Toggles Bar */}
       {moleculeType === 'ethene' && (
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-[#061423] px-5 py-2 border-b border-[rgba(70,227,255,0.08)] text-[11px] text-slate-400">
-          <div className="flex items-center gap-4 flex-wrap">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 bg-[#061423] px-3 sm:px-5 py-2 border-b border-[rgba(70,227,255,0.08)] text-[10px] sm:text-[11px] text-slate-400">
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
             <label className="flex items-center gap-1.5 cursor-pointer hover:text-cyan-300 transition-colors">
               <input
                 type="checkbox"
@@ -225,7 +225,7 @@ export const BondRotationSimulator: React.FC = () => {
                 className="accent-cyan-400 rounded cursor-pointer"
               />
               <Zap className="h-3 w-3 text-cyan-400" />
-              <span><BilingualText en="Imaginary Overlap Lines" bn="কাল্পনিক ওভারল্যাপ রেখা" /></span>
+              <span><BilingualText en="Overlap Lines" bn="ওভারল্যাপ রেখা" /></span>
             </label>
 
             <label className="flex items-center gap-1.5 cursor-pointer hover:text-cyan-300 transition-colors">
@@ -236,7 +236,7 @@ export const BondRotationSimulator: React.FC = () => {
                 className="accent-cyan-400 rounded cursor-pointer"
               />
               <Layers className="h-3 w-3 text-cyan-400" />
-              <span><BilingualText en="Shared Electron Cloud" bn="শেয়ার্ড ইলেকট্রন মেঘ" /></span>
+              <span><BilingualText en="Electron Cloud" bn="ইলেকট্রন মেঘ" /></span>
             </label>
 
             <label className="flex items-center gap-1.5 cursor-pointer hover:text-cyan-300 transition-colors">
@@ -247,7 +247,7 @@ export const BondRotationSimulator: React.FC = () => {
                 className="accent-cyan-400 rounded cursor-pointer"
               />
               <SparklesIcon className="h-3 w-3 text-cyan-400" />
-              <span><BilingualText en="Orbital Phase Signs (+/−)" bn="কক্ষক দশা চিহ্ন (+/−)" /></span>
+              <span><BilingualText en="Phase (+/−)" bn="দশা (+/−)" /></span>
             </label>
           </div>
 
@@ -259,14 +259,14 @@ export const BondRotationSimulator: React.FC = () => {
               className="accent-emerald-400 rounded cursor-pointer"
             />
             <span className="text-emerald-400 font-medium">
-              <BilingualText en="Auto Elastic Spring-Back" bn="স্বয়ংক্রিয় স্প্রিং রিকয়েল" />
+              <BilingualText en="Auto Spring-Back" bn="স্প্রিং রিকয়েল" />
             </span>
           </label>
         </div>
       )}
 
       {/* 3D Canvas Viewport */}
-      <div className="relative flex-1 w-full h-full min-h-[480px] md:min-h-[540px] lg:min-h-[600px] overflow-hidden">
+      <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
         <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]}>
           {/* C1 (Static at [-1, 0, 0]) */}
           <group position={[-1, 0, 0]}>
@@ -380,17 +380,17 @@ export const BondRotationSimulator: React.FC = () => {
         </MolecularCanvas>
 
         {/* Floating Overlap Status Pill */}
-        <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-slate-700/80 bg-[#061320]/85 px-4 py-3 backdrop-blur-md shadow-2xl">
-          <div className="flex items-center gap-2.5">
+        <div className="pointer-events-none absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2.5 rounded-xl border border-slate-700/80 bg-[#061320]/85 p-2.5 sm:px-4 sm:py-3 backdrop-blur-md shadow-2xl">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             {isBroken ? (
-              <AlertTriangle className="h-5 w-5 text-rose-400 shrink-0 animate-bounce" />
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-rose-400 shrink-0 animate-bounce" />
             ) : isStrained ? (
-              <Flame className="h-5 w-5 text-amber-400 shrink-0" />
+              <Flame className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 shrink-0" />
             ) : (
-              <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
+              <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400 shrink-0" />
             )}
-            <div className="text-xs">
-              <p className="font-bold text-white">
+            <div className="text-[11px] sm:text-xs min-w-0">
+              <p className="font-bold text-white truncate sm:whitespace-normal">
                 {moleculeType === 'ethene'
                   ? isBroken
                     ? '⚡ Pi-Bond Overlap Severed! Extremely High Energy Barrier'
@@ -399,18 +399,18 @@ export const BondRotationSimulator: React.FC = () => {
                     : '✓ Stable Pi-Bond: Maximum Parallel 2p–2p Lateral Overlap'
                   : '✓ Free Conformation Rotation: Low Barrier (~12 kJ/mol)'}
               </p>
-              <p className="text-slate-400">
+              <p className="text-slate-400 text-[10px] sm:text-xs truncate sm:whitespace-normal">
                 {moleculeType === 'ethene'
                   ? `Overlap Efficiency: ${Math.round(overlap * 100)}% | Rotational Barrier: 260 kJ/mol (63 kcal/mol)`
                   : 'Ethane rotates smoothly between staggered and eclipsed conformations at room temperature.'}
               </p>
             </div>
           </div>
-          <div className="text-right">
-            <span className="font-mono text-sm font-black text-cyan-300">
+          <div className="text-right shrink-0">
+            <span className="font-mono text-xs sm:text-sm font-black text-cyan-300">
               {angle}°
             </span>
-            <p className="text-[10px] text-slate-500 font-mono">
+            <p className="text-[9px] sm:text-[10px] text-slate-500 font-mono">
               {angle === 0 ? 'Planar' : angle === 90 ? 'Orthogonal' : angle === 180 ? 'Inverted' : 'Rotated'}
             </p>
           </div>
@@ -418,10 +418,10 @@ export const BondRotationSimulator: React.FC = () => {
       </div>
 
       {/* Bottom Slider & Pedagogical Summary */}
-      <div className="border-t border-[rgba(70,227,255,0.14)] bg-[#091b2e] p-4">
+      <div className="border-t border-[rgba(70,227,255,0.14)] bg-[#091b2e] p-3 sm:p-4">
         <div className="flex items-center justify-between text-xs font-semibold text-slate-300 mb-1.5">
-          <span><BilingualText en="Rotate Dihedral Angle (Drag or use forced twist):" bn="ডাইহেড্রাল কোণ ঘোরান (ড্র্যাগ করুন বা বলপ্রয়োগ ঘূর্ণন দেখুন):" /></span>
-          <span className="font-mono text-cyan-400 font-bold">{angle}°</span>
+          <span className="truncate pr-2"><BilingualText en="Rotate Dihedral Angle:" bn="ডাইহেড্রাল কোণ ঘোরান:" /></span>
+          <span className="font-mono text-cyan-400 font-bold shrink-0">{angle}°</span>
         </div>
         <input
           type="range"
@@ -433,21 +433,21 @@ export const BondRotationSimulator: React.FC = () => {
           onTouchEnd={handleSliderRelease}
           className="w-full accent-cyan-400 cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
-          <span>0° (Planar, 100% π-Overlap)</span>
-          <span className="text-rose-400 font-bold">90° (Zero Overlap / Bond Snapped)</span>
+        <div className="flex justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono mt-1">
+          <span>0° (Planar, 100%)</span>
+          <span className="text-rose-400 font-bold">90° (Zero Overlap)</span>
           <span>180° (Inverted)</span>
         </div>
 
         {/* Callout Card Explaining the Physical Principle */}
-        <div className="mt-3.5 rounded-xl border border-cyan-500/20 bg-slate-900/70 p-3 text-xs leading-relaxed text-slate-300">
-          <p className="font-bold text-cyan-300 mb-1">
+        <div className="mt-2.5 sm:mt-3.5 rounded-xl border border-cyan-500/20 bg-slate-900/70 p-2.5 sm:p-3 text-[11px] sm:text-xs leading-relaxed text-slate-300">
+          <p className="font-bold text-cyan-300 mb-0.5 sm:mb-1">
             <BilingualText
               en="Why do CIS and TRANS isomers exist as distinct compounds?"
               bn="কেন Cis এবং Trans আইসোমারগুলি পৃথক যৌগ হিসেবে বিরাজ করে?"
             />
           </p>
-          <p className="text-slate-400">
+          <p className="text-slate-400 leading-relaxed">
             <BilingualText
               en="A π-bond is formed strictly by parallel, sideways overlap of unhybridized 2p orbitals (overlap integral S ∝ cos θ). Twisting by 90° breaks this overlap entirely, costing ~260 kJ/mol (63 kcal/mol). Since ambient thermal energy at room temperature is only ~2.5 kJ/mol, rotation is completely forbidden, permanently locking the stereochemistry!"
               bn="পাই (π) বন্ধন গঠন হয় অসংকরিত ২p কক্ষকগুলির পারস্পরিক সমান্তরাল পাশাপাশি (sideways) ওভারল্যাপের মাধ্যমে (S ∝ cos θ)। ৯০° কোণে ঘোরালে এই ওভারল্যাপ সম্পূর্ণ বিনষ্ট হয়, যার জন্য প্রায় ২৬০ kJ/mol শক্তির প্রয়োজন। সাধারণ ঘরের তাপমাত্রায় উপলব্ধ তাপীয় শক্তি মাত্র ২.৫ kJ/mol, তাই বন্ধনটি কখনো নিজে থেকে ঘুরতে পারে না এবং Cis ও Trans আইসোমারগুলি স্থায়ীভাবে আলাদা থাকে।"

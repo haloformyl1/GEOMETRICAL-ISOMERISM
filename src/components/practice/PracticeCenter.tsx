@@ -70,22 +70,22 @@ export const PracticeCenter: React.FC = () => {
 
   if (!started) {
     return (
-      <div className="surface-panel mx-auto my-6 max-w-4xl overflow-hidden rounded-3xl border border-cyan-500/20 bg-[#071526]/90 shadow-2xl backdrop-blur-xl">
-        <div className="p-8 text-center text-white sm:p-14">
-          <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-2xl border border-cyan-500/40 bg-cyan-950/60 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
-            <PenTool className="h-10 w-10 text-cyan-300" />
+      <div className="surface-panel mx-auto my-4 sm:my-6 max-w-4xl overflow-hidden rounded-2xl sm:rounded-3xl border border-cyan-500/20 bg-[#071526]/90 shadow-2xl backdrop-blur-xl">
+        <div className="p-5 sm:p-14 text-center text-white">
+          <div className="mx-auto mb-4 sm:mb-6 grid h-16 w-16 sm:h-20 sm:w-20 place-items-center rounded-2xl border border-cyan-500/40 bg-cyan-950/60 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+            <PenTool className="h-8 w-8 sm:h-10 sm:w-10 text-cyan-300" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black mb-4 tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl font-black mb-3 sm:mb-4 tracking-tight text-white break-words">
             <BilingualText en="Stereochemistry Practice Center" bn="স্টেরিওরসায়ন অনুশীলন কেন্দ্র" />
           </h1>
-          <p className="text-slate-300 max-w-xl mx-auto text-base leading-relaxed">
+          <p className="text-slate-300 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
             <BilingualText
               en="Challenge yourself with curated questions on Cis-Trans conditions, CIP sequence rules, Syn-Anti oxime stereochemistry, and dipole predictions."
               bn="সিস-ট্রান্স শর্তাবলী, সিআইপি নিয়ম, সিন-অ্যান্টি অক্সাইম এবং ডাইপোল সংক্রান্ত প্রশ্নের মাধ্যমে আপনার দক্ষতা যাচাই করুন।"
             />
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-slate-400 font-semibold">
+          <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-4 sm:gap-6 text-xs text-slate-400 font-semibold">
             <span className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
               {QUESTION_BANK.length} Conceptual & Analytical Questions
@@ -100,11 +100,11 @@ export const PracticeCenter: React.FC = () => {
             </span>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-8 sm:mt-10">
             <button
               type="button"
               onClick={handleStart}
-              className="btn btn-primary px-8 py-4 text-base font-bold shadow-[0_0_25px_rgba(6,182,212,0.4)] cursor-pointer"
+              className="btn btn-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold shadow-[0_0_25px_rgba(6,182,212,0.4)] cursor-pointer"
             >
               <BilingualText en="Start Timed Assessment" bn="মূল্যায়ন শুরু করুন" />
             </button>
@@ -117,26 +117,27 @@ export const PracticeCenter: React.FC = () => {
   if (finished) {
     const percentage = Math.round((score / QUESTION_BANK.length) * 100);
     return (
-      <div className="surface-panel mx-auto my-6 max-w-3xl overflow-hidden rounded-3xl border border-cyan-500/20 bg-[#071526]/90 p-8 sm:p-12 text-center backdrop-blur-xl shadow-2xl">
-        <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
-          <Award className="h-10 w-10" />
+      <div className="surface-panel mx-auto my-4 sm:my-6 max-w-3xl overflow-hidden rounded-2xl sm:rounded-3xl border border-cyan-500/20 bg-[#071526]/90 p-5 sm:p-12 text-center backdrop-blur-xl shadow-2xl">
+        <div className="mx-auto mb-4 sm:mb-6 grid h-16 w-16 sm:h-20 sm:w-20 place-items-center rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+          <Award className="h-8 w-8 sm:h-10 sm:w-10" />
         </div>
-        <h2 className="text-3xl font-black text-white mb-2">
+        <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
           <BilingualText en="Assessment Completed!" bn="মূল্যায়ন সম্পন্ন হয়েছে!" />
         </h2>
-        <p className="text-slate-400 text-sm mb-6">
+        <p className="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6">
           <BilingualText en="Here is your final stereochemistry score:" bn="আপনার চূড়ান্ত ফলাফল:" />
         </p>
 
-        <div className="my-8 inline-flex items-center justify-center gap-6 rounded-2xl border border-cyan-500/30 bg-slate-900/80 px-8 py-6">
+        <div className="my-6 inline-flex flex-col min-[420px]:flex-row items-center justify-center gap-4 sm:gap-6 rounded-2xl border border-cyan-500/30 bg-slate-900/80 px-6 sm:px-8 py-4 sm:py-6">
           <div>
-            <p className="text-4xl font-black text-cyan-300 font-mono">{score} / {QUESTION_BANK.length}</p>
-            <p className="text-xs text-slate-400 uppercase mt-1">Total Score</p>
+            <p className="text-3xl sm:text-4xl font-black text-cyan-300 font-mono">{score} / {QUESTION_BANK.length}</p>
+            <p className="text-[11px] sm:text-xs text-slate-400 uppercase mt-1">Total Score</p>
           </div>
-          <div className="h-12 w-px bg-slate-700" />
+          <div className="hidden min-[420px]:block h-12 w-px bg-slate-700" />
+          <div className="min-[420px]:hidden w-16 h-px bg-slate-700" />
           <div>
-            <p className="text-4xl font-black text-emerald-300 font-mono">{percentage}%</p>
-            <p className="text-xs text-slate-400 uppercase mt-1">Accuracy</p>
+            <p className="text-3xl sm:text-4xl font-black text-emerald-300 font-mono">{percentage}%</p>
+            <p className="text-[11px] sm:text-xs text-slate-400 uppercase mt-1">Accuracy</p>
           </div>
         </div>
 
@@ -144,7 +145,7 @@ export const PracticeCenter: React.FC = () => {
           <button
             type="button"
             onClick={handleStart}
-            className="btn btn-primary px-8 py-3.5 text-sm font-bold cursor-pointer inline-flex items-center gap-2"
+            className="btn btn-primary w-full sm:w-auto px-8 py-3.5 text-sm font-bold cursor-pointer inline-flex items-center justify-center gap-2"
           >
             <RotateCcw className="h-4 w-4" />
             <BilingualText en="Retake Practice Session" bn="পুনরায় চেষ্টা করুন" />
@@ -157,12 +158,12 @@ export const PracticeCenter: React.FC = () => {
   const currentQ = QUESTION_BANK[currentIndex];
 
   return (
-    <div className="mx-auto my-6 max-w-3xl">
-      <div className="surface-panel rounded-3xl border border-cyan-500/20 bg-[#071526]/95 p-6 sm:p-10 backdrop-blur-xl shadow-2xl">
+    <div className="mx-auto my-4 sm:my-6 max-w-3xl">
+      <div className="surface-panel rounded-2xl sm:rounded-3xl border border-cyan-500/20 bg-[#071526]/95 p-4 sm:p-8 md:p-10 backdrop-blur-xl shadow-2xl">
         {/* Progress & Timer Bar */}
-        <div className="flex items-center justify-between border-b border-slate-700/80 pb-4 mb-6">
+        <div className="flex items-center justify-between border-b border-slate-700/80 pb-3 sm:pb-4 mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
-            <span className="rounded-lg bg-cyan-500/20 border border-cyan-500/30 px-2.5 py-1 text-xs font-bold text-cyan-300 font-mono">
+            <span className="rounded-lg bg-cyan-500/20 border border-cyan-500/30 px-2 sm:px-2.5 py-1 text-xs font-bold text-cyan-300 font-mono">
               Q {currentIndex + 1} of {QUESTION_BANK.length}
             </span>
             {currentQ.topic && (
@@ -172,19 +173,19 @@ export const PracticeCenter: React.FC = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-1.5 font-mono text-sm font-bold text-amber-300 rounded-lg border border-amber-500/30 bg-amber-950/40 px-3 py-1">
-            <Clock className="h-4 w-4" />
+          <div className="flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold text-amber-300 rounded-lg border border-amber-500/30 bg-amber-950/40 px-2.5 sm:px-3 py-1">
+            <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             <span>{formatTime(timeRemaining)}</span>
           </div>
         </div>
 
         {/* Question Text */}
-        <h2 className="text-lg sm:text-xl font-bold text-white leading-snug mb-6">
+        <h2 className="text-base sm:text-xl font-bold text-white leading-snug mb-5 sm:mb-6">
           <BilingualText en={currentQ.text.en} bn={currentQ.text.bn} />
         </h2>
 
         {/* Options */}
-        <div className="space-y-3 mb-8">
+        <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
           {currentQ.options.map((opt) => {
             const isSelected = selectedOption === opt.id;
             const isCorrect = opt.id === currentQ.correctOptionId;
@@ -206,18 +207,18 @@ export const PracticeCenter: React.FC = () => {
                 type="button"
                 disabled={isAnswerChecked}
                 onClick={() => setSelectedOption(opt.id)}
-                className={`w-full flex items-center justify-between p-4 rounded-xl border text-left text-sm transition-all cursor-pointer ${btnClass}`}
+                className={`w-full flex items-center justify-between p-3 sm:p-4 rounded-xl border text-left text-xs sm:text-sm transition-all cursor-pointer ${btnClass}`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 place-items-center rounded-lg bg-slate-800 text-xs font-mono font-bold uppercase text-slate-300">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <span className="grid h-6 w-6 place-items-center rounded-lg bg-slate-800 text-xs font-mono font-bold uppercase text-slate-300 shrink-0">
                     {opt.id}
                   </span>
                   <span>
                     <BilingualText en={opt.text.en} bn={opt.text.bn} />
                   </span>
                 </div>
-                {isAnswerChecked && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />}
-                {isAnswerChecked && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-rose-400 shrink-0" />}
+                {isAnswerChecked && isCorrect && <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400 shrink-0 ml-2" />}
+                {isAnswerChecked && isSelected && !isCorrect && <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-rose-400 shrink-0 ml-2" />}
               </button>
             );
           })}
