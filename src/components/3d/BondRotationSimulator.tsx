@@ -273,7 +273,7 @@ export const BondRotationSimulator: React.FC = () => {
 
       {/* 3D Canvas Viewport */}
       <div className="relative flex-1 w-full h-full min-h-[340px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[580px] overflow-hidden">
-        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={isSimulating ? 'always' : 'demand'}>
+        <MolecularCanvas cameraPosition={[0, 0.4, 4.4]} cameraTarget={[0, 0, 0]} frameloop={isSimulating ? 'always' : 'demand'} dpr={isSimulating ? 0.75 : undefined}>
           {/* C1 (Static at [-1, 0, 0]) */}
           <group position={[-1, 0, 0]}>
             <Sphere args={[0.45, 32, 32]}>

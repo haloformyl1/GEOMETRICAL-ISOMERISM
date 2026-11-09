@@ -12,6 +12,7 @@ interface MolecularCanvasProps {
   resetKey?: number;
   ariaLabel?: string;
   frameloop?: 'always' | 'demand' | 'never';
+  dpr?: number | [number, number];
 }
 
 const ResponsiveCameraRig: React.FC<{
@@ -66,6 +67,7 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
   resetKey = 0,
   ariaLabel = 'Interactive 3D molecular stereochemistry model',
   frameloop = 'demand',
+  dpr = [1, 1.5],
 }) => {
   const webGLAvailable = useMemo(() => {
     if (typeof document === 'undefined') return true;
@@ -93,9 +95,9 @@ export const MolecularCanvas: React.FC<MolecularCanvasProps> = ({
       aria-label={ariaLabel}
     >
       <Canvas
-        dpr={[1, 1.5]}
+        dpr={dpr}
         frameloop={frameloop}
-        gl={{ antialias: true, powerPreference: 'high-performance' }}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
       >
         <color attach="background" args={['#06131d']} />
         <ResponsiveCameraRig
