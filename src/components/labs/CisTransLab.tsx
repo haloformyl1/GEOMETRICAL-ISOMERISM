@@ -18,7 +18,7 @@ export const CisTransLab: React.FC = () => {
     <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top Selector & Controls Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-3 sm:p-4 backdrop-blur-md">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+        <div className="flex flex-col md:flex-row md:items-center gap-1.5 sm:gap-2 w-full md:w-auto">
           <label htmlFor="example-select" className="text-xs font-bold text-slate-300">
             <BilingualText en="Select Example:" bn="উদাহরণ নির্বাচন করুন:" />
           </label>
@@ -26,7 +26,7 @@ export const CisTransLab: React.FC = () => {
             id="example-select"
             value={selectedIndex}
             onChange={(e) => setSelectedIndex(Number(e.target.value))}
-            className="w-full sm:w-auto max-w-full rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
+            className="w-full md:w-auto max-w-full rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
           >
             {CIS_TRANS_EXAMPLES.map((ex, idx) => (
               <option key={ex.id} value={idx}>
@@ -114,7 +114,7 @@ export const CisTransLab: React.FC = () => {
               }`}>
                 {activeIsomer === 'A' ? 'Cis' : 'Trans'}
               </span>
-              <h3 className="text-sm sm:text-base font-extrabold text-white truncate max-w-[200px] sm:max-w-md">
+              <h3 className="min-w-0 text-sm sm:text-base font-extrabold text-white truncate max-w-[200px] sm:max-w-md">
                 <BilingualText en={activeStructure.name.en} bn={activeStructure.name.bn} />
               </h3>
             </div>

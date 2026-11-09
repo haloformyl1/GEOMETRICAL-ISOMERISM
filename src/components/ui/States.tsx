@@ -4,7 +4,7 @@ import { BilingualText } from '../BilingualText';
 import { BrandMark } from '../BrandMark';
 
 export const LoadingState: React.FC<{ compact?: boolean }> = ({ compact = false }) => (
-  <div className={`grid place-items-center px-6 text-center ${compact ? 'min-h-48' : 'min-h-[55vh]'}`} role="status" aria-live="polite">
+  <div className={`grid place-items-center overflow-x-clip px-6 text-center ${compact ? 'min-h-48' : 'min-h-[55vh]'}`} role="status" aria-live="polite">
     <div className="flex flex-col items-center gap-5">
       <div className="relative">
         <BrandMark compact />

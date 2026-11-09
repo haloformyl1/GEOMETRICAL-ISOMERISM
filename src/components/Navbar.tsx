@@ -106,10 +106,12 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Tools: Language, Accessibility, Fullscreen, Menu */}
           <div className="relative flex items-center gap-1 sm:gap-2 shrink-0">
-            <LanguageSelector compact />
+            <div className="hidden sm:block">
+              <LanguageSelector compact />
+            </div>
 
             {/* Accessibility dropdown */}
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <button
                 type="button"
                 onClick={() => setAccessibilityOpen((open) => !open)}
@@ -160,7 +162,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={toggleAppFullscreen}
-              className="grid h-9 w-9 place-items-center rounded-xl border border-[rgba(70,227,255,0.22)] bg-slate-900/60 text-slate-300 hover:text-white transition-all cursor-pointer"
+              className="hidden h-9 w-9 place-items-center rounded-xl border border-[rgba(70,227,255,0.22)] bg-slate-900/60 text-slate-300 transition-all hover:text-white sm:grid cursor-pointer"
               title={appFullscreen ? 'Exit fullscreen' : 'Fullscreen app'}
             >
               {appFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -207,6 +209,30 @@ export const Navbar: React.FC = () => {
 
           <div className="mt-6 border-t border-slate-800/80 pt-6 flex flex-col gap-4">
             <LanguageSelector />
+
+            <button
+              type="button"
+              onClick={() => setReducedMotion(!reducedMotion)}
+              className="flex min-h-12 w-full items-center justify-between rounded-xl border border-slate-800 bg-slate-900/60 px-4 text-left font-bold text-[#edf8ff] cursor-pointer"
+              aria-pressed={reducedMotion}
+            >
+              <span>
+                <span className="block text-sm">Reduce Motion</span>
+                <span className="block text-xs font-medium text-slate-400">Pause decorative 3D spin</span>
+              </span>
+              <span className={`grid h-6 w-6 place-items-center rounded-md border ${reducedMotion ? 'border-cyan-400 bg-cyan-500 text-white' : 'border-slate-700'}`}>
+                {reducedMotion && <Check className="h-4 w-4" />}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleAppFullscreen}
+              className="flex min-h-12 w-full items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/60 px-4 text-left font-bold text-[#edf8ff] cursor-pointer"
+            >
+              {appFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              <span>{appFullscreen ? 'Exit fullscreen' : 'Fullscreen app'}</span>
+            </button>
 
             <div className="flex items-center justify-between text-xs text-slate-400 pt-2">
               <span>Designed &amp; Prepared By:</span>

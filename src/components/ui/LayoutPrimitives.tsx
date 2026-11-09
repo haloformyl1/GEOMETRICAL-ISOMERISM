@@ -46,10 +46,10 @@ interface SectionHeaderProps {
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({ title, subtitle, icon: Icon, accent = 'blue', className = '' }) => (
   <header className={`section-heading ${className}`} data-accent={accent}>
-    <div>
+    <div className="min-w-0">
       <div className="flex items-center gap-2.5">
-        {Icon && <Icon className="h-5 w-5 text-[var(--section-accent,var(--accent-primary))]" aria-hidden="true" />}
-        <h2 className="type-section-title font-extrabold text-[var(--text-primary)]">{title}</h2>
+        {Icon && <Icon className="h-5 w-5 shrink-0 text-[var(--section-accent,var(--accent-primary))]" aria-hidden="true" />}
+        <h2 className="type-section-title min-w-0 break-words font-extrabold text-[var(--text-primary)]">{title}</h2>
       </div>
       {subtitle && <div className="mt-2 max-w-[72ch] text-[var(--text-secondary)]">{subtitle}</div>}
     </div>

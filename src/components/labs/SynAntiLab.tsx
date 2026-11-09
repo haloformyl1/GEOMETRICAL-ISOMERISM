@@ -42,7 +42,7 @@ export const SynAntiLab: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full bg-transparent overflow-hidden">
       {/* Top Controls */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-3 sm:p-4 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 sm:gap-3 border-b border-[rgba(70,227,255,0.14)] bg-[#091b2e]/90 p-3 sm:p-4 backdrop-blur-md">
         <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-1.5 sm:gap-2">
           <label htmlFor="sa-select" className="text-xs font-bold text-slate-300 shrink-0">
             <BilingualText en="Select System:" bn="সিস্টেম নির্বাচন করুন:" />
@@ -51,7 +51,7 @@ export const SynAntiLab: React.FC = () => {
             id="sa-select"
             value={selectedIndex}
             onChange={(e) => setSelectedIndex(Number(e.target.value))}
-            className="w-full sm:w-auto max-w-full rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
+            className="w-full md:w-auto max-w-full rounded-xl border border-cyan-500/30 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-cyan-200 outline-none cursor-pointer"
           >
             {SYN_ANTI_EXAMPLES.map((ex, idx) => (
               <option key={ex.id} value={idx}>
@@ -62,12 +62,12 @@ export const SynAntiLab: React.FC = () => {
         </div>
 
         {/* Isomer Switcher & Photo-Switch button */}
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          <div className="flex flex-1 sm:flex-initial rounded-xl border border-cyan-500/30 bg-slate-900/80 p-0.5">
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <div className="flex flex-1 md:flex-initial rounded-xl border border-cyan-500/30 bg-slate-900/80 p-0.5">
             <button
               type="button"
               onClick={() => setActiveIsomer('A')}
-              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
+              className={`flex-1 md:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 activeIsomer === 'A'
                   ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-[0_0_12px_rgba(245,158,11,0.4)]'
                   : 'text-slate-400 hover:text-white'
@@ -78,7 +78,7 @@ export const SynAntiLab: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveIsomer('B')}
-              className={`flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
+              className={`flex-1 md:flex-initial rounded-lg px-2.5 sm:px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer border-0 text-center ${
                 activeIsomer === 'B'
                   ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-[0_0_12px_rgba(14,165,233,0.4)]'
                   : 'text-slate-400 hover:text-white'
@@ -92,7 +92,7 @@ export const SynAntiLab: React.FC = () => {
             <button
               type="button"
               onClick={triggerPhotochemicalSwitch}
-              className={`flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl border px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex flex-1 md:flex-initial items-center justify-center gap-1.5 rounded-xl border px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                 lightMode === 'uv'
                   ? 'border-purple-400 bg-purple-600 text-white animate-pulse'
                   : lightMode === 'vis'
@@ -248,7 +248,7 @@ export const SynAntiLab: React.FC = () => {
               }`}>
                 {activeIsomer === 'A' ? 'Syn Isomer' : 'Anti Isomer'}
               </span>
-              <h3 className="text-sm sm:text-base font-extrabold text-white truncate">
+              <h3 className="min-w-0 text-sm sm:text-base font-extrabold text-white truncate">
                 <BilingualText en={activeStructure.name.en} bn={activeStructure.name.bn} />
               </h3>
             </div>
